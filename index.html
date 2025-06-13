@@ -237,16 +237,15 @@
     <!-- Firebase SDKs -->
     <script type="module">
         // Import the functions you need from the SDKs you need
-        import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, /* signInAnonymously, */ onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, query, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
         // Your actual web app's Firebase configuration
         // This MUST be replaced with YOUR unique config from Firebase Console -> Project settings -> Your apps -> Web app
         const firebaseConfig = {
-            // REPLACE THIS ENTIRE CONFIGURATION WITH YOUR chardieslab-demo-site project's config
-            apiKey: "AIzaSyDy3cgr5QWdZ_n85Kh5IyZc5nVkrOmYQM",
+            apiKey: "AIzaSyDy3cgr5QWdZ_n85Kh5IyZc5nVpkrOmYQM",
             authDomain: "charlieslab-demo-site.firebaseapp.com",
             projectId: "charlieslab-demo-site",
             storageBucket: "charlieslab-demo-site.firebasestorage.app",
@@ -256,10 +255,11 @@
         };
 
         // Firebase Initialization
-        // Removed 'let app;' here to prevent re-declaration
-        let db;
-        let auth;
-        let storage; // Declare storage variable
+        const app = initializeApp(firebaseConfig); // Initialize Firebase app once
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const storage = getStorage(app);
+
         let userId = null;
         let isLoggedIn = false; // Simple client-side state
         let isAuthReady = false; // Flag to indicate if auth state has been checked
@@ -345,11 +345,11 @@
                 msgFirebaseInitFailed: "Failed to initialize Firebase. Check console for details.",
                 msgPublicContentAuthRequired: "Please log in or enable anonymous access in Firebase for public content.",
                 msgSelected: "Selected",
-                downloadPdfButton: "Download PDF", // Added missing key
-                editButton: "Edit", // Added missing key
-                deleteButton: "Delete", // Added missing key
-                byAuthor: "by", // Added missing key for dynamic text
-                msgNotAvailable: "Not available", // Added missing key
+                downloadPdfButton: "Download PDF",
+                editButton: "Edit",
+                deleteButton: "Delete",
+                byAuthor: "by",
+                msgNotAvailable: "Not available",
                 msgUploading: "Uploading",
                 msgUploaded: "Uploaded",
                 msgFailedUploadCover: "Failed to upload cover image",
@@ -452,11 +452,11 @@
                 msgFirebaseInitFailed: "Impossibile inizializzare Firebase. Controlla la console per i dettagli.",
                 msgPublicContentAuthRequired: "Si prega di accedere o abilitare l'accesso anonimo in Firebase per il contenuto pubblico.",
                 msgSelected: "Selezionato",
-                downloadPdfButton: "Scarica PDF", // Added missing key
-                editButton: "Modifica", // Added missing key
-                deleteButton: "Elimina", // Added missing key
-                byAuthor: "di", // Added missing key for dynamic text
-                msgNotAvailable: "Non disponibile", // Added missing key
+                downloadPdfButton: "Scarica PDF",
+                editButton: "Modifica",
+                deleteButton: "Elimina",
+                byAuthor: "di",
+                msgNotAvailable: "Non disponibile",
                 msgUploading: "Caricamento in corso",
                 msgUploaded: "Caricato",
                 msgFailedUploadCover: "Caricamento immagine di copertina fallito",
@@ -509,10 +509,14 @@
             }
             
             // Update button texts that change based on context (Add/Update)
-            if (editingBookId) {
-                if (submitBookBtn) submitBookBtn.textContent = translations[lang]['msgUpdating'];
-            } else {
-                if (submitBookBtn) submitBookBtn.textContent = translations[lang]['addPublicationButton'];
+            // Ensure submitBookBtn is defined before accessing it
+            const submitBookBtnLocal = document.getElementById('submitBookBtn');
+            if (submitBookBtnLocal) {
+                if (editingBookId) {
+                    submitBookBtnLocal.textContent = translations[lang]['msgUpdating'];
+                } else {
+                    submitBookBtnLocal.textContent = translations[lang]['addPublicationButton'];
+                }
             }
 
             // Update modal buttons if they are visible
@@ -525,20 +529,25 @@
             if (confirmNoBtn) confirmNoBtn.textContent = translations[lang]['confirmNoBtn'];
 
             // Update dynamically generated text in file input displays
+            const coverImageFileNameDisplayLocal = document.getElementById('coverImageFileNameDisplay');
+            const pdfFileNameDisplayLocal = document.getElementById('pdfFileNameDisplay');
+            const uploadedCoverPreviewLocal = document.getElementById('uploadedCoverPreview');
+
+
             if (currentCoverImageFile) {
-                if (coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = `${translations[currentLang]['msgSelected']}: ${currentCoverImageFile.name}`;
-            } else if (editingBookId && uploadedCoverPreview.src) {
-                if (coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = `${translations[currentLang]['msgCurrentCover']}: ${getFileNameFromUrl(uploadedCoverPreview.src)}`;
+                if (coverImageFileNameDisplayLocal) coverImageFileNameDisplayLocal.textContent = `${translations[currentLang]['msgSelected']}: ${currentCoverImageFile.name}`;
+            } else if (editingBookId && uploadedCoverPreviewLocal && uploadedCoverPreviewLocal.src) {
+                if (coverImageFileNameDisplayLocal) coverImageFileNameDisplayLocal.textContent = `${translations[currentLang]['msgCurrentCover']}: ${getFileNameFromUrl(uploadedCoverPreviewLocal.src)}`;
             } else {
-                if (coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = '';
+                if (coverImageFileNameDisplayLocal) coverImageFileNameDisplayLocal.textContent = '';
             }
 
             if (currentPdfFile) {
-                if (pdfFileNameDisplay) pdfFileNameDisplay.textContent = `${translations[currentLang]['msgSelected']}: ${currentPdfFile.name}`;
+                if (pdfFileNameDisplayLocal) pdfFileNameDisplayLocal.textContent = `${translations[currentLang]['msgSelected']}: ${currentPdfFile.name}`;
             } else if (editingBookId && currentPdfURL) {
-                if (pdfFileNameDisplay) pdfFileNameDisplay.textContent = `${translations[currentLang]['msgCurrentPdf']}: ${getFileNameFromUrl(currentPdfURL)}`;
+                if (pdfFileNameDisplayLocal) pdfFileNameDisplayLocal.textContent = `${translations[currentLang]['msgCurrentPdf']}: ${getFileNameFromUrl(currentPdfURL)}`;
             } else {
-                if (pdfFileNameDisplay) pdfFileNameDisplay.textContent = '';
+                if (pdfFileNameDisplayLocal) pdfFileNameDisplayLocal.textContent = '';
             }
 
             // Update potentially dynamic content like "by Author"
@@ -547,14 +556,16 @@
                 el.textContent = `${translations[currentLang]['byAuthor']} ${author}`;
             });
             // Update the no data messages if they are currently visible
-            if (homeView && !homeView.classList.contains('hidden')) {
-                const noBooksMessageElement = document.getElementById('noBooksMessage');
+            const homeViewLocal = document.getElementById('homeView');
+            const noBooksMessageElement = document.getElementById('noBooksMessage');
+            if (homeViewLocal && (homeViewLocal.classList.contains('flex') || !homeViewLocal.classList.contains('hidden'))) {
                 if (noBooksMessageElement && !noBooksMessageElement.classList.contains('hidden')) {
                     noBooksMessageElement.textContent = translations[currentLang]['noPublicationsMessage'];
                 }
             }
-            if (adminDashboardView && !adminDashboardView.classList.contains('hidden')) {
-                const noAdminBooksMessage = document.getElementById('noAdminBooksMessage');
+            const adminDashboardViewLocal = document.getElementById('adminDashboardView');
+            const noAdminBooksMessage = document.getElementById('noAdminBooksMessage');
+            if (adminDashboardViewLocal && (adminDashboardViewLocal.classList.contains('flex') || !adminDashboardViewLocal.classList.contains('hidden'))) {
                 if (noAdminBooksMessage && !noAdminBooksMessage.classList.contains('hidden')) {
                     noAdminBooksMessage.textContent = translations[currentLang]['noPublicationsUploadedYet'];
                 }
@@ -562,20 +573,9 @@
         }
 
         // Event listeners for language buttons
-        const langEnBtn = document.getElementById('langEnBtn');
-        const langItBtn = document.getElementById('langItBtn');
-
-        if (langEnBtn) langEnBtn.addEventListener('click', () => setLanguage('en'));
-        if (langItBtn) langItBtn.addEventListener('click', () => setLanguage('it'));
-
-        // --- Firebase SDKs ---
-        // Firebase Initialization
-        let db;
-        let auth;
-        let storage; // Declare storage variable
-        let userId = null;
-        let isLoggedIn = false; // Simple client-side state
-        let isAuthReady = false; // Flag to indicate if auth state has been checked
+        // Assigned directly as these are in the header and always available
+        document.getElementById('langEnBtn').addEventListener('click', () => setLanguage('en'));
+        document.getElementById('langItBtn').addEventListener('click', () => setLanguage('it'));
 
         // Message Modal Functions
         function showMessageModal(messageKey) {
@@ -596,8 +596,8 @@
         }
 
         function closeMessageModal() {
-            const modalMessageElement = document.getElementById('modalMessage');
             const messageModal = document.getElementById('messageModal');
+            const modalMessageElement = document.getElementById('modalMessage');
 
             if (modalMessageElement) modalMessageElement.textContent = ''; // Clear message
             if (messageModal) {
@@ -646,68 +646,21 @@
             }
         });
 
-        // Initialize Firebase and set up auth listener
-        async function initializeFirebase() {
-            try {
-                // Get the existing app instance or initialize a new one if none exists
-                const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-                
-                db = getFirestore(app);
-                auth = getAuth(app);
-                storage = getStorage(app); // Initialize Firebase Storage here!
-
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        console.log("Authenticated with user ID:", userId);
-                    } else {
-                        console.warn(translations[currentLang]['msgAuthWarning']); // Use translation key
-                        userId = null; // Ensure userId is null if no one is signed in
-                    }
-                    const currentUserIdElement = document.getElementById('currentUserId');
-                    if (currentUserIdElement) {
-                        currentUserIdElement.textContent = userId || translations[currentLang]['footerUserId'] + ' ' + translations[currentLang]['msgNotAvailable']; // Use translation key
-                    }
-                    isAuthReady = true; // Auth state has been checked
-                    
-                    // Only load books if currently on home view and auth is ready
-                    if (document.getElementById('homeView') && (document.getElementById('homeView').classList.contains('flex') || !document.getElementById('homeView').classList.contains('hidden'))) {
-                        if (userId) {
-                            loadBooks(); // Load books once authenticated (for Home view)
-                        } else {
-                            const booksContainer = document.getElementById('booksContainer');
-                            const noBooksMessageElement = document.getElementById('noBooksMessage');
-                            if (booksContainer && noBooksMessageElement) {
-                                booksContainer.innerHTML = ''; // Clear any previous content
-                                noBooksMessageElement.textContent = translations[currentLang]['msgPublicContentAuthRequired']; // Use translation key
-                                noBooksMessageElement.classList.remove('hidden');
-                            }
-                        }
-                    }
-                });
-
-            } catch (error) {
-                console.error("Error initializing Firebase:", error);
-                showMessageModal("msgFirebaseInitFailed"); // Use translation key
-            }
-        }
-
         // --- View Management ---
-        // Variables for views and buttons - these will be assigned inside window.onload
-        let homeView, aboutView, contactView, adminLoginView, adminDashboardView;
-        let homeViewBtn, aboutViewBtn, contactViewBtn, adminLoginBtn, adminLogoutBtn, exploreBooksBtn;
-        let publicSearchInput;
-        let uploadBookForm, bookTitleInput, bookAuthorInput, bookDescriptionInput, coverImageFileInput, coverImageFileNameDisplay, uploadedCoverPreview, pdfFileInput, pdfFileNameDisplay, submitBookBtn, cancelEditBtn, formTitle;
-        let adminBooksList, noAdminBooksMessage, noBooksMessage, booksContainer; // Added booksContainer here
+        const homeView = document.getElementById('homeView');
+        const aboutView = document.getElementById('aboutView');
+        const contactView = document.getElementById('contactView');
+        const adminLoginView = document.getElementById('adminLoginView');
+        const adminDashboardView = document.getElementById('adminDashboardView');
+
+        const homeViewBtn = document.getElementById('homeViewBtn');
+        const aboutViewBtn = document.getElementById('aboutViewBtn');
+        const contactViewBtn = document.getElementById('contactViewBtn');
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+        const exploreBooksBtn = document.getElementById('exploreBooksBtn'); // New button
 
         function showView(viewId) {
-            // Get references to views if not already assigned (redundant if called after setupEventListeners, but safe)
-            homeView = homeView || document.getElementById('homeView');
-            aboutView = aboutView || document.getElementById('aboutView');
-            contactView = contactView || document.getElementById('contactView');
-            adminLoginView = adminLoginView || document.getElementById('adminLoginView');
-            adminDashboardView = adminDashboardView || document.getElementById('adminDashboardView');
-
             // Hide all views
             const allViews = [homeView, aboutView, contactView, adminLoginView, adminDashboardView];
             allViews.forEach(view => {
@@ -718,7 +671,7 @@
             });
 
             // Show the target view
-            const targetView = document.getElementById(viewId); // Re-get for safety, or use direct variable if assured assigned
+            const targetView = document.getElementById(viewId);
             if (targetView) {
                 targetView.classList.remove('hidden');
                 targetView.classList.add('flex'); // Ensure the section itself uses flex to center content if needed
@@ -729,13 +682,12 @@
                 if (userId) { // Load books only if authenticated
                     loadBooks();
                 } else {
-                    // Ensure elements are available when view is shown
-                    booksContainer = booksContainer || document.getElementById('booksContainer');
-                    noBooksMessage = noBooksMessage || document.getElementById('noBooksMessage');
-                    if (booksContainer && noBooksMessage) {
+                    const booksContainer = document.getElementById('booksContainer');
+                    const noBooksMessageElement = document.getElementById('noBooksMessage');
+                    if (booksContainer && noBooksMessageElement) {
                         booksContainer.innerHTML = ''; // Clear any previous content
-                        noBooksMessage.textContent = translations[currentLang]['msgPublicContentAuthRequired']; // Use translation key
-                        noBooksMessage.classList.remove('hidden');
+                        noBooksMessageElement.textContent = translations[currentLang]['msgPublicContentAuthRequired']; // Use translation key
+                        noBooksMessageElement.classList.remove('hidden');
                     }
                 }
             } else if (viewId === 'adminDashboardView' && isLoggedIn) {
@@ -743,359 +695,97 @@
             }
         }
 
-        // Function to set up all event listeners and initial view after DOM is ready
-        function setupEventListeners() {
-            // Assign DOM elements to variables
-            homeView = document.getElementById('homeView');
-            aboutView = document.getElementById('aboutView');
-            contactView = document.getElementById('contactView');
-            adminLoginView = document.getElementById('adminLoginView');
-            adminDashboardView = document.getElementById('adminDashboardView');
+        // Initial view setup happens in window.onload now.
 
-            homeViewBtn = document.getElementById('homeViewBtn');
-            aboutViewBtn = document.getElementById('aboutViewBtn');
-            contactViewBtn = document.getElementById('contactViewBtn');
-            adminLoginBtn = document.getElementById('adminLoginBtn');
-            adminLogoutBtn = document.getElementById('adminLogoutBtn');
-            exploreBooksBtn = document.getElementById('exploreBooksBtn');
-            publicSearchInput = document.getElementById('publicSearchInput');
-
-            uploadBookForm = document.getElementById('uploadBookForm');
-            bookTitleInput = document.getElementById('bookTitle');
-            bookAuthorInput = document.getElementById('bookAuthor');
-            bookDescriptionInput = document.getElementById('bookDescription');
-            coverImageFileInput = document.getElementById('coverImageFile');
-            coverImageFileNameDisplay = document.getElementById('coverImageFileNameDisplay');
-            uploadedCoverPreview = document.getElementById('uploadedCoverPreview');
-            pdfFileInput = document.getElementById('pdfFile');
-            pdfFileNameDisplay = document.getElementById('pdfFileNameDisplay');
-            submitBookBtn = document.getElementById('submitBookBtn');
-            cancelEditBtn = document.getElementById('cancelEditBtn');
-            formTitle = document.getElementById('formTitle');
-            adminBooksList = document.getElementById('adminBooksList');
-            noAdminBooksMessage = document.getElementById('noAdminBooksMessage');
-            noBooksMessage = document.getElementById('noBooksMessage');
-            booksContainer = document.getElementById('booksContainer'); // Ensure this is also assigned here
-
-            // Set initial language and display home view
-            setLanguage(currentLang);
-            showView('homeView');
-
-            // Attach Event Listeners for Navigation
-            if (homeViewBtn) homeViewBtn.addEventListener('click', () => showView('homeView'));
-            if (aboutViewBtn) aboutViewBtn.addEventListener('click', () => showView('aboutView'));
-            if (contactViewBtn) contactViewBtn.addEventListener('click', () => showView('contactView'));
-            if (adminLoginBtn) adminLoginBtn.addEventListener('click', () => showView('adminLoginView'));
-            
-            if (exploreBooksBtn) {
-                exploreBooksBtn.addEventListener('click', () => {
-                    const booksContainerElement = document.getElementById('booksContainer'); // Get reference for scrolling
-                    if (booksContainerElement) {
-                        booksContainerElement.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            }
-
-            if (adminLogoutBtn) {
-                adminLogoutBtn.addEventListener('click', async () => {
-                    try {
-                        await signOut(auth); // Use Firebase signOut from auth instance
-                        isLoggedIn = false;
-                        showView('homeView');
-                        showMessageModal("msgLoggedOut"); // Use translation key
-                    } catch (error) {
-                        console.error("Error signing out:", error);
-                        showMessageModal("msgErrorLoggingOut"); // Use translation key
-                    }
-                });
-            }
-
-            // Admin Login Form Listener
-            if (adminLoginForm) {
-                adminLoginForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const email = usernameInput.value;
-                    const password = passwordInput.value;
-
-                    try {
-                        await signInWithEmailAndPassword(auth, email, password);
-                        isLoggedIn = true;
-                        showView('adminDashboardView');
-                        if (loginErrorMessage) loginErrorMessage.textContent = '';
-                        if (usernameInput) usernameInput.value = '';
-                        if (passwordInput) passwordInput.value = '';
-                        loadBooksForAdmin();
-                    } catch (error) {
-                        console.error("Firebase Login Error:", error.code, error.message);
-                        if (loginErrorMessage) {
-                            if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-                                loginErrorMessage.textContent = translations[currentLang]['msgLoginInvalid'];
-                            } else if (error.code === 'auth/too-many-requests') {
-                                loginErrorMessage.textContent = translations[currentLang]['msgLoginTooManyAttempts'];
-                            } else {
-                                loginErrorMessage.textContent = translations[currentLang]['msgLoginFailedGeneric'] + error.message;
-                            }
-                        }
-                    }
-                });
-            }
-
-            // File input change listeners
-            if (coverImageFileInput) coverImageFileInput.addEventListener('change', async (e) => {
-                if (!isLoggedIn) {
-                    showMessageModal("msgLoginRequiredForUpload");
-                    e.target.value = ''; // Clear selection
-                    return;
-                }
-                if (e.target.files.length > 0) {
-                    const file = e.target.files[0];
-                    currentCoverImageFile = file;
-                    currentCoverImageFileName = file.name;
-                    if (uploadedCoverPreview) {
-                        uploadedCoverPreview.src = '';
-                        uploadedCoverPreview.style.display = 'none';
-                    }
-                    if (coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = `${translations[currentLang]['msgUploading']} ${file.name}...`;
-                    const imageStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/covers/${Date.now()}_${file.name}`);
-                    try {
-                        const snapshot = await uploadBytes(imageStorageRef, file);
-                        currentCoverImageURL = await getDownloadURL(snapshot.ref);
-                        if (uploadedCoverPreview) {
-                            uploadedCoverPreview.src = currentCoverImageURL;
-                            uploadedCoverPreview.style.display = 'block';
-                        }
-                        if (coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = `${translations[currentLang]['msgUploaded']}: ${currentCoverImageFileName}`;
-                        showMessageModal("msgCoverUploaded");
-                    } catch (error) {
-                        console.error("Error uploading cover image to Firebase Storage:", error);
-                        showMessageModal(`${translations[currentLang]['msgFailedUploadCover']}: ${error.message}. ${translations[currentLang]['msgCheckStorageRulesOrNetwork']}`);
-                        currentCoverImageFile = null;
-                        currentCoverImageFileName = '';
-                        if (coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = translations[currentLang]['msgUploadFailed'];
-                        if (uploadedCoverPreview) {
-                            uploadedCoverPreview.style.display = 'none';
-                            uploadedCoverPreview.src = '';
-                        }
-                    }
-                } else {
-                    currentCoverImageFile = null;
-                    currentCoverImageFileName = '';
-                    if (coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = '';
-                    currentCoverImageURL = '';
-                    if (uploadedCoverPreview) {
-                        uploadedCoverPreview.src = '';
-                        uploadedCoverPreview.style.display = 'none';
-                    }
+        // Event Listeners for Navigation
+        // These are now guaranteed to be available in window.onload
+        if (homeViewBtn) homeViewBtn.addEventListener('click', () => showView('homeView'));
+        if (aboutViewBtn) aboutViewBtn.addEventListener('click', () => showView('aboutView'));
+        if (contactViewBtn) contactViewBtn.addEventListener('click', () => showView('contactView'));
+        if (adminLoginBtn) adminLoginBtn.addEventListener('click', () => showView('adminLoginView'));
+        // New hero section button
+        if (exploreBooksBtn) {
+            exploreBooksBtn.addEventListener('click', () => {
+                const booksContainer = document.getElementById('booksContainer');
+                if (booksContainer) {
+                    booksContainer.scrollIntoView({ behavior: 'smooth' });
                 }
             });
+        }
 
-            if (pdfFileInput) pdfFileInput.addEventListener('change', async (e) => {
-                if (!isLoggedIn) {
-                    showMessageModal("msgLoginRequiredForUpload");
-                    e.target.value = '';
-                    return;
-                }
-                if (e.target.files.length > 0) {
-                    const file = e.target.files[0];
-                    currentPdfFile = file;
-                    currentPdfFileName = file.name;
-                    if (pdfFileNameDisplay) pdfFileNameDisplay.textContent = `${translations[currentLang]['msgUploading']} ${file.name}...`;
-                    const pdfStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/pdfs/${Date.now()}_${file.name}`);
-                    try {
-                        const snapshot = await uploadBytes(pdfStorageRef, file);
-                        currentPdfURL = await getDownloadURL(snapshot.ref);
-                        if (pdfFileNameDisplay) pdfFileNameDisplay.textContent = `${translations[currentLang]['msgUploaded']}: ${currentPdfFileName}`;
-                        showMessageModal("msgPdfUploaded");
-                    } catch (error) {
-                        console.error("Error uploading PDF to Firebase Storage:", error);
-                        showMessageModal(`${translations[currentLang]['msgFailedUploadPdf']}: ${error.message}. ${translations[currentLang]['msgCheckStorageRulesOrNetwork']}`);
-                        currentPdfFile = null;
-                        currentPdfFileName = '';
-                        if (pdfFileNameDisplay) pdfFileNameDisplay.textContent = translations[currentLang]['msgUploadFailed'];
-                        currentPdfURL = '';
-                    }
-                } else {
-                    currentPdfFile = null;
-                    currentPdfFileName = '';
-                    if (pdfFileNameDisplay) pdfFileNameDisplay.textContent = '';
-                    currentPdfURL = '';
+
+        if (adminLogoutBtn) {
+            adminLogoutBtn.addEventListener('click', async () => {
+                try {
+                    await signOut(auth); // Use Firebase signOut from auth instance
+                    isLoggedIn = false;
+                    showView('homeView');
+                    showMessageModal("msgLoggedOut"); // Use translation key
+                } catch (error) {
+                    console.error("Error signing out:", error);
+                    showMessageModal("msgErrorLoggingOut"); // Use translation key
                 }
             });
+        }
 
-            // Upload/Edit Form Listener
-            if (uploadBookForm) {
-                uploadBookForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    if (!isLoggedIn) {
-                        showMessageModal("msgLoginRequiredToAddEdit");
-                        return;
-                    }
-                    if (!isAuthReady) {
-                        showMessageModal("msgFirebaseNotReady");
-                        return;
-                    }
+        // --- Admin Login Logic ---
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginErrorMessage = document.getElementById('loginErrorMessage');
 
-                    const title = bookTitleInput.value.trim();
-                    const author = bookAuthorInput.value.trim();
-                    const description = bookDescriptionInput.value.trim();
+        if (adminLoginForm) {
+            adminLoginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = usernameInput.value;
+                const password = passwordInput.value;
 
-                    let pdfUrlToSave = currentPdfURL;
-                    let coverImageUrlToSave = currentCoverImageURL;
-                    let pdfFileNameToSave = currentPdfFileName;
-                    let coverImageFileNameToSave = currentCoverImageFileName;
-
-                    if (!title || !author) {
-                        showMessageModal("msgFillTitleAuthor");
-                        return;
-                    }
-
-                    if (editingBookId) {
-                        const bookSnap = await getDoc(doc(db, BOOKS_COLLECTION_PATH, editingBookId));
-                        const existingBook = bookSnap.exists() ? bookSnap.data() : null;
-
-                        if (!currentPdfFile) {
-                            pdfUrlToSave = existingBook?.pdfUrl || '';
-                            pdfFileNameToSave = existingBook?.pdfFileName || '';
-                        }
-                        if (!currentCoverImageFile) {
-                            coverImageUrlToSave = existingBook?.coverImageUrl || '';
-                            coverImageFileNameToSave = existingBook?.coverImageFileName || '';
-                        }
-                    } else {
-                        if (!currentPdfFile || !currentPdfURL) {
-                            showMessageModal("msgSelectPdfWaitUpload");
-                            return;
-                        }
-                        if (!currentCoverImageFile || !currentCoverImageURL) {
-                            showMessageModal("msgSelectCoverWaitUpload");
-                            return;
-                        }
-                    }
-
-                    if (!pdfUrlToSave) {
-                        showMessageModal("msgPdfMissing");
-                        return;
-                    }
-                    if (!coverImageUrlToSave) {
-                        showMessageModal("msgCoverMissing");
-                        return;
-                    }
-
-                    if (submitBookBtn) {
-                        submitBookBtn.textContent = editingBookId ? translations[currentLang]['msgUpdating'] : translations[currentLang]['msgAdding'];
-                        submitBookBtn.disabled = true;
-                    }
-                    
-                    try {
-                        const bookData = {
-                            title: title,
-                            author: author,
-                            description: description,
-                            coverImageUrl: coverImageUrlToSave,
-                            coverImageFileName: coverImageFileNameToSave,
-                            pdfUrl: pdfUrlToSave,
-                            pdfFileName: pdfFileNameToSave,
-                            timestamp: new Date().toISOString()
-                        };
-
-                        if (editingBookId) {
-                            await updateDoc(doc(db, BOOKS_COLLECTION_PATH, editingBookId), bookData);
-                            showMessageModal("msgPublicationUpdated");
+                try {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    isLoggedIn = true;
+                    showView('adminDashboardView');
+                    if (loginErrorMessage) loginErrorMessage.textContent = '';
+                    if (usernameInput) usernameInput.value = '';
+                    if (passwordInput) passwordInput.value = '';
+                    loadBooksForAdmin();
+                } catch (error) {
+                    console.error("Firebase Login Error:", error.code, error.message);
+                    if (loginErrorMessage) {
+                        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                            loginErrorMessage.textContent = translations[currentLang]['msgLoginInvalid'];
+                        } else if (error.code === 'auth/too-many-requests') {
+                            loginErrorMessage.textContent = translations[currentLang]['msgLoginTooManyAttempts'];
                         } else {
-                            await addDoc(collection(db, BOOKS_COLLECTION_PATH), bookData);
-                            showMessageModal("msgPublicationAdded");
-                        }
-
-                        resetBookForm();
-                    } catch (error) {
-                        console.error("Error saving document: ", error);
-                        showMessageModal(`${translations[currentLang]['msgErrorSavingPublication']}: ${error.message}. ${translations[currentLang]['msgCheckFirestoreRules']}`);
-                    } finally {
-                        if (submitBookBtn) {
-                            submitBookBtn.textContent = editingBookId ? translations[currentLang]['updatePublicationButton'] : translations[currentLang]['addPublicationButton'];
-                            submitBookBtn.disabled = false;
-                            setLanguage(currentLang);
+                            loginErrorMessage.textContent = translations[currentLang]['msgLoginFailedGeneric'] + error.message;
                         }
                     }
-                });
-            }
+                }
+            });
+        }
 
-            // Cancel Edit Listener
-            if (cancelEditBtn) {
-                cancelEditBtn.addEventListener('click', () => {
-                    resetBookForm();
-                    showMessageModal("msgEditCancelled");
-                });
-            }
-
-            // Public Search Input Listener
-            if (publicSearchInput) {
-                publicSearchInput.addEventListener('input', (e) => {
-                    loadBooks(e.target.value);
-                });
-            }
-
-            // Modals backdrop click
-            const messageModal = document.getElementById('messageModal');
-            if (messageModal) {
-                messageModal.addEventListener('click', function(event) {
-                    if (event.target === messageModal) {
-                        closeMessageModal();
-                    }
-                });
-            }
-            
-            const confirmModal = document.getElementById('confirmModal');
-            if (confirmModal) {
-                confirmModal.addEventListener('click', function(event) {
-                    if (event.target === confirmModal) {
-                        confirmModal.classList.remove('flex');
-                        confirmModal.classList.add('hidden');
-                        if (confirmCallback) {
-                            confirmCallback(false);
-                            confirmCallback = null;
-                        }
-                    }
-                });
-            }
-        } // End of setupEventListeners
 
         // --- Book Management (Firestore) ---
         const BOOKS_COLLECTION_PATH = `artifacts/${firebaseConfig.projectId}/public/data/books`;
+        const publicSearchInput = document.getElementById('publicSearchInput');
 
         // Function to load and display books in the public view
         async function loadBooks(searchTerm = '') {
-            // Check if isAuthReady is true and userId is available
             if (!isAuthReady || !userId) {
-                if (noBooksMessage) { // Use the variable assigned in setupEventListeners
-                    noBooksMessage.innerHTML = translations[currentLang]['msgPublicContentAuthRequired'];
-                    noBooksMessage.classList.remove('hidden');
-                }
-                if (booksContainer) { // Use the variable assigned in setupEventListeners
-                    booksContainer.innerHTML = ''; // Clear existing books
+                const booksContainer = document.getElementById('booksContainer');
+                const noBooksMessageElement = document.getElementById('noBooksMessage');
+                if (booksContainer && noBooksMessageElement) {
+                    booksContainer.innerHTML = '';
+                    noBooksMessageElement.textContent = translations[currentLang]['msgPublicContentAuthRequired'];
+                    noBooksMessageElement.classList.remove('hidden');
                 }
                 return;
             }
 
-            // Ensure booksContainer is available
-            if (!booksContainer) {
-                booksContainer = document.getElementById('booksContainer');
-                if (!booksContainer) {
-                    console.error("booksContainer not found in loadBooks.");
-                    return;
-                }
-            }
-            // Ensure noBooksMessage is available
-            if (!noBooksMessage) {
-                noBooksMessage = document.getElementById('noBooksMessage');
-                if (!noBooksMessage) {
-                    console.error("noBooksMessage not found in loadBooks.");
-                    return;
-                }
-            }
-
-            noBooksMessage.classList.add('hidden');
-            booksContainer.innerHTML = '';
+            const booksContainer = document.getElementById('booksContainer');
+            const noBooksMessageElement = document.getElementById('noBooksMessage');
+            
+            if (noBooksMessageElement) noBooksMessageElement.classList.add('hidden');
+            if (booksContainer) booksContainer.innerHTML = '';
 
             try {
                 const q = query(collection(db, BOOKS_COLLECTION_PATH));
@@ -1112,37 +802,48 @@
                         (book.description && book.description.toLowerCase().includes(lowerCaseSearchTerm))
                     );
 
-                    booksContainer.innerHTML = '';
-                    if (filteredBooks.length === 0) {
-                        noBooksMessage.textContent = translations[currentLang]['msgNoBooksFoundSearch'];
-                        noBooksMessage.classList.remove('hidden');
-                        return;
+                    if (booksContainer) {
+                        booksContainer.innerHTML = '';
+                        if (filteredBooks.length === 0) {
+                            if (noBooksMessageElement) {
+                                noBooksMessageElement.textContent = translations[currentLang]['msgNoBooksFoundSearch'];
+                                noBooksMessageElement.classList.remove('hidden');
+                            }
+                            return;
+                        }
+
+                        if (noBooksMessageElement) noBooksMessageElement.classList.add('hidden');
+
+                        filteredBooks.forEach((book) => {
+                            const bookCard = `
+                                <div class="bg-yellow-100 p-4 rounded-lg shadow-md flex flex-col items-center text-center transition duration-300 hover:shadow-lg">
+                                    <img src="${book.coverImageUrl || 'https://placehold.co/150x200/cccccc/333333?text=No+Cover'}" alt="${book.title}" class="w-36 h-48 object-cover rounded-md mb-4 shadow-sm">
+                                    <h3 class="text-xl font-semibold mb-2 text-gray-800">${book.title}</h3>
+                                    <p class="text-gray-600 text-sm mb-3">${translations[currentLang]['byAuthor']} ${book.author}</p>
+                                    <p class="text-gray-700 text-sm overflow-hidden text-ellipsis h-12 mb-4">${book.description || (translations[currentLang]['msgNoDescriptionProvided'])}</p>
+                                    <a href="${book.pdfUrl || '#'}" target="_blank" class="mt-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ${!book.pdfUrl ? 'opacity-50 cursor-not-allowed' : ''}" ${!book.pdfUrl ? `onclick="event.preventDefault(); showMessageModal('msgPdfNotAvailable');"` : ''}>
+                                        ${translations[currentLang]['downloadPdfButton']}
+                                    </a>
+                                </div>
+                            `;
+                            booksContainer.innerHTML += bookCard;
+                        });
                     }
-
-                    noBooksMessage.classList.add('hidden');
-
-                    filteredBooks.forEach((book) => {
-                        const bookCard = `
-                            <div class="bg-yellow-100 p-4 rounded-lg shadow-md flex flex-col items-center text-center transition duration-300 hover:shadow-lg">
-                                <img src="${book.coverImageUrl || 'https://placehold.co/150x200/cccccc/333333?text=No+Cover'}" alt="${book.title}" class="w-36 h-48 object-cover rounded-md mb-4 shadow-sm">
-                                <h3 class="text-xl font-semibold mb-2 text-gray-800">${book.title}</h3>
-                                <p class="text-gray-600 text-sm mb-3">${translations[currentLang]['byAuthor']} ${book.author}</p>
-                                <p class="text-gray-700 text-sm overflow-hidden text-ellipsis h-12 mb-4">${book.description || (translations[currentLang]['msgNoDescriptionProvided'])}</p>
-                                <a href="${book.pdfUrl || '#'}" target="_blank" class="mt-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ${!book.pdfUrl ? 'opacity-50 cursor-not-allowed' : ''}" ${!book.pdfUrl ? `onclick="event.preventDefault(); showMessageModal('msgPdfNotAvailable');"` : ''}>
-                                    ${translations[currentLang]['downloadPdfButton']}
-                                </a>
-                            </div>
-                        `;
-                        booksContainer.innerHTML += bookCard;
-                    });
                 });
             } catch (error) {
                 console.error("Error setting up Firestore listener for books:", error);
                 showMessageModal("msgErrorLoadingPublications");
-                if (noBooksMessage) {
-                    noBooksMessage.textContent = translations[currentLang]['msgErrorLoadingPublications'];
+                if (noBooksMessageElement) {
+                    noBooksMessageElement.textContent = translations[currentLang]['msgErrorLoadingPublications'];
                 }
             }
+        }
+
+        // Add event listener for public search input
+        if (publicSearchInput) {
+            publicSearchInput.addEventListener('input', (e) => {
+                loadBooks(e.target.value);
+            });
         }
 
         // Function to load and display books in the admin dashboard
@@ -1151,9 +852,8 @@
                 console.warn("Not authorized to load admin books. Please log in.");
                 return;
             }
-            // Ensure elements are available
-            if (!adminBooksList) adminBooksList = document.getElementById('adminBooksList');
-            if (!noAdminBooksMessage) noAdminBooksMessage = document.getElementById('noAdminBooksMessage');
+            const adminBooksList = document.getElementById('adminBooksList');
+            const noAdminBooksMessage = document.getElementById('noAdminBooksMessage');
 
             if (adminBooksList) adminBooksList.innerHTML = '';
             if (noAdminBooksMessage) noAdminBooksMessage.classList.add('hidden');
@@ -1215,6 +915,22 @@
 
 
         // --- Add/Edit Book Logic ---
+        const uploadBookForm = document.getElementById('uploadBookForm');
+        const bookTitleInput = document.getElementById('bookTitle');
+        const bookAuthorInput = document.getElementById('bookAuthor');
+        const bookDescriptionInput = document.getElementById('bookDescription');
+
+        const coverImageFileInput = document.getElementById('coverImageFile'); // File input for cover image
+        const coverImageFileNameDisplay = document.getElementById('coverImageFileNameDisplay'); // Display selected image filename
+        const uploadedCoverPreview = document.getElementById('uploadedCoverPreview'); // Image preview
+
+        const pdfFileInput = document.getElementById('pdfFile');
+        const pdfFileNameDisplay = document.getElementById('pdfFileNameDisplay');
+
+        const submitBookBtn = document.getElementById('submitBookBtn');
+        const cancelEditBtn = document.getElementById('cancelEditBtn');
+        const formTitle = document.getElementById('formTitle');
+
         let editingBookId = null; // Stores the ID of the book being edited
         let currentCoverImageFile = null; // Stores the actual File object for upload
         let currentPdfFile = null; // Stores the actual File object for upload
@@ -1223,6 +939,318 @@
         let currentPdfFileName = ''; // Stores the name of the selected/existing PDF file
         let currentPdfURL = ''; // Stores the Firebase Storage URL of the selected/existing PDF file
 
+
+        // Handle Cover Image file selection - now uploads to Firebase Storage
+        if (coverImageFileInput) {
+            coverImageFileInput.addEventListener('change', async (e) => {
+                if (!isLoggedIn) {
+                    showMessageModal("msgLoginRequiredForUpload"); // Use translation key
+                    coverImageFileInput.value = ''; // Clear selection
+                    return;
+                }
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    currentCoverImageFile = file; // Store the actual file object
+                    currentCoverImageFileName = file.name;
+
+                    // Display a loading message
+                    if(uploadedCoverPreview) {
+                        uploadedCoverPreview.src = ''; // Clear preview
+                        uploadedCoverPreview.style.display = 'none';
+                    }
+                    if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = `${translations[currentLang]['msgUploading']} ${file.name}...`; // Use translation key
+
+                    // Upload to Firebase Storage
+                    // Use a unique path to avoid conflicts, e.g., include timestamp or user ID
+                    const imageStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/covers/${Date.now()}_${file.name}`);
+                    try {
+                        const snapshot = await uploadBytes(imageStorageRef, file);
+                        currentCoverImageURL = await getDownloadURL(snapshot.ref);
+                        if(uploadedCoverPreview) {
+                            uploadedCoverPreview.src = currentCoverImageURL;
+                            uploadedCoverPreview.style.display = 'block';
+                        }
+                        if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = `${translations[currentLang]['msgUploaded']}: ${currentCoverImageFileName}`; // Use translation key
+                        showMessageModal("msgCoverUploaded"); // Use translation key
+                    } catch (error) {
+                        console.error("Error uploading cover image to Firebase Storage:", error);
+                        showMessageModal(`${translations[currentLang]['msgFailedUploadCover']}: ${error.message}. ${translations[currentLang]['msgCheckStorageRulesOrNetwork']}`); // Use translation key
+                        currentCoverImageFile = null; // Reset file object
+                        currentCoverImageFileName = '';
+                        if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = translations[currentLang]['msgUploadFailed']; // Use translation key
+                        if(uploadedCoverPreview) {
+                            uploadedCoverPreview.style.display = 'none';
+                            uploadedCoverPreview.src = '';
+                        }
+                    }
+                } else {
+                    currentCoverImageFile = null;
+                    currentCoverImageFileName = '';
+                    if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = '';
+                    currentCoverImageURL = '';
+                    if(uploadedCoverPreview) {
+                        uploadedCoverPreview.src = '';
+                        uploadedCoverPreview.style.display = 'none';
+                    }
+                }
+            });
+        }
+        
+        // Handle PDF file selection - now uploads to Firebase Storage
+        if (pdfFileInput) {
+            pdfFileInput.addEventListener('change', async (e) => {
+                if (!isLoggedIn) {
+                    showMessageModal("msgLoginRequiredForUpload"); // Use translation key
+                    pdfFileInput.value = ''; // Clear selection
+                    return;
+                }
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    currentPdfFile = file; // Store the actual file object
+                    currentPdfFileName = file.name;
+
+                    // Display a loading message
+                    if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = `${translations[currentLang]['msgUploading']} ${file.name}...`; // Use translation key
+
+                    // Upload to Firebase Storage
+                    const pdfStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/pdfs/${Date.now()}_${file.name}`); // Unique path
+                    try {
+                        const snapshot = await uploadBytes(pdfStorageRef, file);
+                        currentPdfURL = await getDownloadURL(snapshot.ref);
+                        if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = `${translations[currentLang]['msgUploaded']}: ${currentPdfFileName}`; // Use translation key
+                        showMessageModal("msgPdfUploaded"); // Use translation key
+                    } catch (error) {
+                        console.error("Error uploading PDF to Firebase Storage:", error);
+                        showMessageModal(`${translations[currentLang]['msgFailedUploadPdf']}: ${error.message}. ${translations[current_lang]['msgCheckStorageRulesOrNetwork']}`); // Use translation key
+                        currentPdfFile = null; // Reset file object
+                        currentPdfFileName = '';
+                        if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = translations[currentLang]['msgUploadFailed']; // Use translation key
+                        currentPdfURL = '';
+                    }
+                } else {
+                    currentPdfFile = null;
+                    currentPdfFileName = '';
+                    if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = '';
+                    currentPdfURL = '';
+                }
+            });
+        }
+
+
+        if (uploadBookForm) {
+            uploadBookForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!isLoggedIn) {
+                    showMessageModal("msgLoginRequiredToAddEdit"); // Use translation key
+                    return;
+                }
+                if (!isAuthReady) {
+                     showMessageModal("msgFirebaseNotReady"); // Use translation key
+                     return;
+                }
+
+                const title = bookTitleInput.value.trim();
+                const author = bookAuthorInput.value.trim();
+                const description = bookDescriptionInput.value.trim();
+
+                let pdfUrlToSave = currentPdfURL;
+                let coverImageUrlToSave = currentCoverImageURL;
+                let pdfFileNameToSave = currentPdfFileName; // Use the filename from the upload process
+                let coverImageFileNameToSave = currentCoverImageFileName; // Use the filename from the upload process
+
+                // --- Validation & Retaining existing URLs/Filenames during edit ---
+                if (!title || !author) {
+                    showMessageModal("msgFillTitleAuthor");
+                    return;
+                }
+
+                if (editingBookId) { // If editing existing book
+                    // Fetch current book data if no new files were selected
+                    const bookSnap = await getDoc(doc(db, BOOKS_COLLECTION_PATH, editingBookId));
+                    const existingBook = bookSnap.exists() ? bookSnap.data() : null;
+
+                    if (!currentPdfFile) { // If no new PDF was uploaded, use existing
+                        pdfUrlToSave = existingBook?.pdfUrl || '';
+                        pdfFileNameToSave = existingBook?.pdfFileName || '';
+                    }
+                    if (!currentCoverImageFile) { // If no new cover was uploaded, use existing
+                        coverImageUrlToSave = existingBook?.coverImageUrl || '';
+                        coverImageFileNameToSave = existingBook?.coverImageFileName || '';
+                    }
+                } else { // For new books, ensure files are selected
+                    if (!currentPdfFile || !currentPdfURL) {
+                        showMessageModal("msgSelectPdfWaitUpload"); // Use translation key
+                        return;
+                    }
+                    if (!currentCoverImageFile || !currentCoverImageURL) {
+                        showMessageModal("msgSelectCoverWaitUpload"); // Use translation key
+                        return;
+                    }
+                }
+
+                // Final check that URLs are available after all logic
+                if (!pdfUrlToSave) {
+                     showMessageModal("msgPdfMissing"); // Use translation key
+                     return;
+                }
+                if (!coverImageUrlToSave) {
+                     showMessageModal("msgCoverMissing"); // Use translation key
+                     return;
+                }
+
+                // Show loading indicator / disable button
+                if (submitBookBtn) {
+                    submitBookBtn.textContent = editingBookId ? translations[currentLang]['msgUpdating'] : translations[currentLang]['msgAdding'];
+                    submitBookBtn.disabled = true;
+                }
+                
+                try {
+                    const bookData = {
+                        title: title,
+                        author: author,
+                        description: description,
+                        coverImageUrl: coverImageUrlToSave,
+                        coverImageFileName: coverImageFileNameToSave,
+                        pdfUrl: pdfUrlToSave,
+                        pdfFileName: pdfFileNameToSave,
+                        timestamp: new Date().toISOString()
+                    };
+
+                    if (editingBookId) {
+                        await updateDoc(doc(db, BOOKS_COLLECTION_PATH, editingBookId), bookData);
+                        showMessageModal("msgPublicationUpdated");
+                    } else {
+                        await addDoc(collection(db, BOOKS_COLLECTION_PATH), bookData);
+                        showMessageModal("msgPublicationAdded");
+                    }
+
+                    resetBookForm();
+                    // loadBooksForAdmin and loadBooks are already handled by onSnapshot listeners
+                } catch (error) {
+                    console.error("Error saving document: ", error);
+                    showMessageModal(`${translations[currentLang]['msgErrorSavingPublication']}: ${error.message}. ${translations[currentLang]['msgCheckFirestoreRules']}`); // Use translation key
+                } finally {
+                    if (submitBookBtn) {
+                        submitBookBtn.textContent = editingBookId ? translations[currentLang]['updatePublicationButton'] : translations[currentLang]['addPublicationButton'];
+                        submitBookBtn.disabled = false;
+                        setLanguage(currentLang); // Re-apply translation to button text
+                    }
+                }
+            });
+        }
+
+
+        // --- Edit Book Logic ---
+        async function editBook(bookId) {
+            if (!isAuthReady || !isLoggedIn) {
+                showMessageModal("msgLoginRequiredToEdit"); // Use translation key
+                return;
+            }
+
+            try {
+                const bookRef = doc(db, BOOKS_COLLECTION_PATH, bookId);
+                const bookSnap = await getDoc(bookRef);
+
+                if (bookSnap.exists()) {
+                    const bookData = bookSnap.data();
+                    editingBookId = bookId;
+
+                    // Populate the form with existing data
+                    if (bookTitleInput) bookTitleInput.value = bookData.title;
+                    if (bookAuthorInput) bookAuthorInput.value = bookData.author;
+                    if (bookDescriptionInput) bookDescriptionInput.value = bookData.description;
+
+                    // Set cover image preview and currentCoverImageURL
+                    if (uploadedCoverPreview) {
+                        uploadedCoverPreview.src = bookData.coverImageUrl || '';
+                        uploadedCoverPreview.style.display = bookData.coverImageUrl ? 'block' : 'none';
+                    }
+                    if (coverImageFileInput) coverImageFileInput.value = ''; // Important: Clear native file input value for new selection
+                    currentCoverImageURL = bookData.coverImageUrl || ''; // Store the existing URL
+                    currentCoverImageFileName = bookData.coverImageFileName || '';
+                    if (coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = bookData.coverImageFileName ? `${translations[currentLang]['msgCurrentCover']}: ${bookData.coverImageFileName}` : translations[currentLang]['msgNoCoverSelected']; // Use translation key
+
+
+                    // Set PDF display and currentPdfURL
+                    if (pdfFileInput) pdfFileInput.value = ''; // Important: Clear native file input value for new selection
+                    currentPdfURL = bookData.pdfUrl || ''; // Store the existing URL
+                    currentPdfFileName = bookData.pdfFileName || '';
+                    if (pdfFileNameDisplay) pdfFileNameDisplay.textContent = bookData.pdfFileName ? `${translations[currentLang]['msgCurrentPdf']}: ${bookData.pdfFileName}` : translations[currentLang]['msgNoPdfSelected']; // Use translation key
+
+
+                    // Change form title and button text
+                    if (formTitle) formTitle.textContent = translations[currentLang]['editPublicationTitle']; // Use translation key
+                    if (submitBookBtn) submitBookBtn.textContent = translations[currentLang]['updatePublicationButton']; // Use translation key
+                    if (cancelEditBtn) cancelEditBtn.classList.remove('hidden'); // Show cancel button
+
+                    // Scroll to the form
+                    window.scrollTo({ top: uploadBookForm.offsetTop, behavior: 'smooth' });
+                } else {
+                    showMessageModal("msgBookNotFound"); // Use translation key
+                }
+            } catch (error) {
+                console.error("Error fetching book for edit:", error);
+                showMessageModal("msgErrorLoadingBook"); // Use translation key
+            }
+        }
+
+        // --- Cancel Edit Logic ---
+        if (cancelEditBtn) {
+            cancelEditBtn.addEventListener('click', () => {
+                resetBookForm(); // Uses translations
+                showMessageModal("msgEditCancelled"); // Use translation key
+            });
+        }
+
+        // --- Delete Book Logic ---
+        async function deleteBook(bookId) {
+            if (!isLoggedIn) {
+                showMessageModal("msgLoginRequiredToDelete"); // Use translation key
+                return;
+            }
+            if (!isAuthReady) {
+                 showMessageModal("msgFirebaseNotReady"); // Use translation key
+                 return;
+            }
+
+            showConfirmModal("msgConfirmDelete", async (confirmed) => { // Use translation key
+                if (confirmed) {
+                    try {
+                        const bookRef = doc(db, BOOKS_COLLECTION_PATH, bookId);
+                        const bookSnap = await getDoc(bookRef);
+                        const bookData = bookSnap.exists() ? bookSnap.data() : null;
+
+                        // Attempt to delete files from Firebase Storage first if URLs are valid
+                        if (bookData && bookData.pdfUrl && !bookData.pdfUrl.includes('placehold.co')) {
+                            try {
+                                const pdfStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/pdfs/${bookData.pdfFileName}`);
+                                await deleteObject(pdfStorageRef);
+                                console.log("PDF deleted from Storage:", bookData.pdfFileName);
+                            } catch (storageError) {
+                                console.warn("Could not delete PDF from Storage (might not exist or permission issue):", storageError);
+                            }
+                        }
+                        if (bookData && bookData.coverImageUrl && !bookData.coverImageUrl.includes('placehold.co')) {
+                            try {
+                                const coverStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/covers/${bookData.coverImageFileName}`);
+                                await deleteObject(coverStorageRef);
+                                console.log("Cover image deleted from Storage:", bookData.coverImageFileName);
+                            } catch (storageError) {
+                                console.warn("Could not delete cover image from Storage (might not exist or permission issue):", storageError);
+                            }
+                        }
+
+                        // Finally, delete the document from Firestore
+                        await deleteDoc(bookRef);
+                        showMessageModal("msgPublicationDeleted"); // Use translation key
+                        // onSnapshot listeners will automatically update loadBooksForAdmin and loadBooks
+                    } catch (error) {
+                        console.error("Error removing document: ", error);
+                        showMessageModal(`${translations[currentLang]['msgErrorDeletingPublication']}: ${error.message}.`); // Use translation key
+                    }
+                }
+            });
+        }
 
         // Helper to extract file name from URL (for display/deletion) - adjusted for new storage path
         function getFileNameFromUrl(url) {
@@ -1273,15 +1301,60 @@
             currentPdfURL = '';
         }
 
-        // Call initialization and setup event listeners on window load
+        // Call initialization on window load
         window.onload = function () {
-            initializeFirebase();
-            setupEventListeners(); // Call the new function to set up DOM element references and event listeners
+            initializeApp(firebaseConfig); // Initialize Firebase app once again here for this code version.
+            auth.onAuthStateChanged(user => { // Listener for authentication state changes
+                if (user) {
+                    userId = user.uid;
+                    isLoggedIn = true;
+                    console.log("User logged in:", userId);
+                } else {
+                    userId = null;
+                    isLoggedIn = false;
+                    console.log("No user logged in.");
+                }
+                isAuthReady = true; // Mark auth state as ready
+                
+                // Now that auth is ready, set up event listeners and initial view
+                const currentUserIdElement = document.getElementById('currentUserId');
+                if (currentUserIdElement) {
+                    currentUserIdElement.textContent = userId || translations[currentLang]['footerUserId'] + ' ' + translations[currentLang]['msgNotAvailable'];
+                }
+                
+                // Only show initial view once auth state is confirmed
+                showView('homeView');
+            });
+
             const currentYearElement = document.getElementById('currentYear');
             if (currentYearElement) {
                 currentYearElement.textContent = new Date().getFullYear();
             }
             setLanguage(currentLang); // Ensure initial load translates content
+
+            // Modals backdrop click (ensure these are set up after modals exist)
+            const messageModal = document.getElementById('messageModal');
+            if (messageModal) {
+                messageModal.addEventListener('click', function(event) {
+                    if (event.target === messageModal) {
+                        closeMessageModal();
+                    }
+                });
+            }
+            
+            const confirmModal = document.getElementById('confirmModal');
+            if (confirmModal) {
+                confirmModal.addEventListener('click', function(event) {
+                    if (event.target === confirmModal) {
+                        confirmModal.classList.remove('flex');
+                        confirmModal.classList.add('hidden');
+                        if (confirmCallback) {
+                            confirmCallback(false);
+                            confirmCallback = null;
+                        }
+                    }
+                });
+            }
         };
     </script>
 </body>
