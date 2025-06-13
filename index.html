@@ -523,7 +523,7 @@
             if (currentCoverImageFile) {
                 if (coverImageFileNameDisplayLocal) coverImageFileNameDisplayLocal.textContent = `${translations[currentLang]['msgSelected']}: ${currentCoverImageFile.name}`;
             } else if (editingBookId && uploadedCoverPreviewLocal && uploadedCoverPreviewLocal.src) {
-                if (coverImageFileNameDisplayLocal) coverImageFileNameDisplayLocal.textContent = `${translations[currentLang]['msgCurrentCover']}: ${getFileNameFromUrl(uploadedCoverPreviewLocal.src)}`;
+                if (coverImageFileNameDisplayLocal) coverImageFileNameDisplayLocal.textContent = `${translations[currentLang]['msgCurrentCover']}: ${getFileNameFromUrl(uploadedCoverPreviewLocal.src, true)}`; // Pass true to get full filename for display
             } else {
                 if (coverImageFileNameDisplayLocal) coverImageFileNameDisplayLocal.textContent = '';
             }
@@ -531,7 +531,7 @@
             if (currentPdfFile) {
                 if (pdfFileNameDisplayLocal) pdfFileNameDisplayLocal.textContent = `${translations[currentLang]['msgSelected']}: ${currentPdfFile.name}`;
             } else if (editingBookId && currentPdfURL) {
-                if (pdfFileNameDisplayLocal) pdfFileNameDisplayLocal.textContent = `${translations[currentLang]['msgCurrentPdf']}: ${getFileNameFromUrl(currentPdfURL)}`;
+                if (pdfFileNameDisplayLocal) pdfFileNameDisplayLocal.textContent = `${translations[currentLang]['msgCurrentPdf']}: ${getFileNameFromUrl(currentPdfURL, true)}`; // Pass true
             } else {
                 if (pdfFileNameDisplayLocal) pdfFileNameDisplayLocal.textContent = '';
             }
@@ -817,8 +817,10 @@
                     }
                     if (e.target.files.length > 0) {
                         const file = e.target.files[0];
+                        // Store the full unique filename including timestamp for later deletion/reference
+                        const uniqueFileName = `${Date.now()}_${file.name}`;
                         currentCoverImageFile = file; // Store the actual file object for form reset
-                        currentCoverImageFileName = file.name;
+                        currentCoverImageFileName = uniqueFileName; // Store the unique name
 
                         // Display a loading message
                         if(uploadedCoverPreview) {
@@ -827,8 +829,8 @@
                         }
                         if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = `${translations[currentLang]['msgUploading']} ${file.name}...`;
 
-                        // Upload to Firebase Storage
-                        const imageStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/covers/${Date.now()}_${file.name}`);
+                        // Upload to Firebase Storage using the unique filename
+                        const imageStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/covers/${uniqueFileName}`);
                         try {
                             const snapshot = await uploadBytes(imageStorageRef, file);
                             currentCoverImageURL = await getDownloadURL(snapshot.ref);
@@ -836,7 +838,7 @@
                                 uploadedCoverPreview.src = currentCoverImageURL;
                                 uploadedCoverPreview.style.display = 'block';
                             }
-                            if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = `${translations[currentLang]['msgUploaded']}: ${currentCoverImageFileName}`;
+                            if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = `${translations[currentLang]['msgUploaded']}: ${file.name}`; // Display original filename
                             showMessageModal("msgCoverUploaded");
                         } catch (error) {
                             console.error("Error uploading cover image to Firebase Storage:", error);
@@ -871,18 +873,20 @@
                     }
                     if (e.target.files.length > 0) {
                         const file = e.target.files[0];
+                        // Store the full unique filename including timestamp for later deletion/reference
+                        const uniqueFileName = `${Date.now()}_${file.name}`;
                         currentPdfFile = file; // Store the actual file object for form reset
-                        currentPdfFileName = file.name;
+                        currentPdfFileName = uniqueFileName; // Store the unique name
 
                         // Display a loading message
                         if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = `${translations[currentLang]['msgUploading']} ${file.name}...`;
 
-                        // Upload to Firebase Storage
-                        const pdfStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/pdfs/${Date.now()}_${file.name}`);
+                        // Upload to Firebase Storage using the unique filename
+                        const pdfStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/pdfs/${uniqueFileName}`);
                         try {
                             const snapshot = await uploadBytes(pdfStorageRef, file);
                             currentPdfURL = await getDownloadURL(snapshot.ref);
-                            if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = `${translations[currentLang]['msgUploaded']}: ${currentPdfFileName}`;
+                            if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = `${translations[currentLang]['msgUploaded']}: ${file.name}`; // Display original filename
                             showMessageModal("msgPdfUploaded");
                         } catch (error) {
                             console.error("Error uploading PDF to Firebase Storage:", error);
@@ -932,13 +936,15 @@
                         const bookSnap = await getDoc(doc(db, BOOKS_COLLECTION_PATH, editingBookId));
                         const existingBook = bookSnap.exists() ? bookSnap.data() : null;
 
-                        if (!currentPdfFile) { // If no new PDF was selected, use existing URL and filename
+                        // If no new PDF was selected, use existing URL and unique filename from Firestore
+                        if (!currentPdfFile) {
                             pdfUrlToSave = existingBook?.pdfUrl || '';
-                            pdfFileNameToSave = existingBook?.pdfFileName || '';
+                            pdfFileNameToSave = existingBook?.pdfFileName || ''; // Use the unique filename from storage
                         }
-                        if (!currentCoverImageFile) { // If no new cover was selected, use existing URL and filename
+                        // If no new cover was selected, use existing URL and unique filename from Firestore
+                        if (!currentCoverImageFile) {
                             coverImageUrlToSave = existingBook?.coverImageUrl || '';
-                            coverImageFileNameToSave = existingBook?.coverImageFileName || '';
+                            coverImageFileNameToSave = existingBook?.coverImageFileName || ''; // Use the unique filename from storage
                         }
                     } else { // For new books, ensure files are selected AND uploaded
                         if (!currentPdfFile || !currentPdfURL) {
@@ -972,9 +978,9 @@
                             author: author,
                             description: description,
                             coverImageUrl: coverImageUrlToSave,
-                            coverImageFileName: coverImageFileNameToSave, // Corrected this line
+                            coverImageFileName: coverImageFileNameToSave, // This will now correctly store the unique name
                             pdfUrl: pdfUrlToSave,
-                            pdfFileName: pdfFileNameToSave,
+                            pdfFileName: pdfFileNameToSave, // This will now correctly store the unique name
                             timestamp: new Date().toISOString()
                         };
 
@@ -1139,7 +1145,9 @@
                     querySnapshot.forEach((docRef) => {
                         const book = docRef.data();
                         const bookId = docRef.id;
-                        const pdfDisplay = book.pdfFileName ? `${translations[currentLang]['uploadPdfFileLabel']}: ${book.pdfFileName}` : translations[currentLang]['msgNoCurrentPdf'];
+                        // Display original filename for better readability in Admin UI
+                        const pdfDisplayFileName = getFileNameFromUrl(book.pdfUrl, false) || translations[currentLang]['msgNotAvailable'];
+                        const coverDisplayFileName = getFileNameFromUrl(book.coverImageUrl, false) || translations[currentLang]['msgNotAvailable'];
 
                         const bookItem = `
                             <div class="bg-neutral-100 p-4 rounded-lg shadow-sm grid grid-cols-1 md:grid-cols-3 items-center gap-4">
@@ -1148,7 +1156,8 @@
                                     <div>
                                         <h4 class="text-lg font-semibold text-gray-800">${book.title}</h4>
                                         <p class="text-gray-600 text-sm">${book.author}</p>
-                                        <p class="text-gray-500 text-xs">${pdfDisplay}</p>
+                                        <p class="text-gray-500 text-xs">${translations[currentLang]['uploadPdfFileLabel']}: ${pdfDisplayFileName}</p>
+                                        <p class="text-gray-500 text-xs">${translations[currentLang]['uploadCoverImageLabel']}: ${coverDisplayFileName}</p>
                                     </div>
                                 </div>
                                 <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 justify-end">
@@ -1183,23 +1192,31 @@
         let currentCoverImageFile = null; // Stores the actual File object for upload
         let currentPdfFile = null; // Stores the actual File object for upload
         let currentCoverImageURL = ''; // Stores the Firebase Storage URL of the selected/existing cover image
-        let currentCoverImageFileName = ''; // Stores the name of the selected/existing image file
-        let currentPdfFileName = ''; // Stores the name of the selected/existing PDF file
+        let currentCoverImageFileName = ''; // Stores the name of the selected/existing image file (includes timestamp)
+        let currentPdfFileName = ''; // Stores the name of the selected/existing PDF file (includes timestamp)
         let currentPdfURL = ''; // Stores the Firebase Storage URL of the selected/existing PDF file
 
 
         // Helper to extract file name from URL (for display/deletion) - adjusted for new storage path
-        function getFileNameFromUrl(url) {
+        // fullFileName = true will return the unique timestamped filename, false will return original
+        function getFileNameFromUrl(url, fullFileName = false) {
+            if (!url) return '';
             try {
                 const urlObj = new URL(url);
                 const pathParts = decodeURIComponent(urlObj.pathname).split('/');
-                const filenameWithTimestamp = pathParts[pathParts.length - 1];
-                const parts = filenameWithTimestamp.split('_');
-                if (parts.length > 1 && !isNaN(Number(parts[0]))) {
-                    parts.shift();
-                    return parts.join('_');
+                const uniqueFileName = pathParts[pathParts.length - 1]; // e.g., 1678888888888_myimage.jpg
+                
+                if (fullFileName) {
+                    return uniqueFileName;
                 }
-                return filenameWithTimestamp;
+
+                // To get just the original filename, remove the timestamp prefix if present
+                const parts = uniqueFileName.split('_');
+                if (parts.length > 1 && !isNaN(Number(parts[0]))) { // Check if first part is a number (timestamp)
+                    parts.shift(); // Remove the timestamp
+                    return parts.join('_'); // Rejoin the rest
+                }
+                return uniqueFileName; // Return as is if no timestamp prefix or already original
             } catch (e) {
                 console.warn("Error extracting filename from URL:", url, e);
                 return "Unknown File";
@@ -1227,8 +1244,8 @@
             currentCoverImageFile = null;
             currentPdfFile = null;
             currentCoverImageURL = '';
-            currentCoverImageFileName = '';
-            currentPdfFileName = '';
+            currentCoverImageFileName = ''; // Reset unique filename
+            currentPdfFileName = ''; // Reset unique filename
             currentPdfURL = '';
         }
 
