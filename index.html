@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-lang-key="pageTitle">CharliesLAB - Book Management</title>
+    <title data-lang-key="pageTitle">Quaderni di Archeologia della Libya - Publications</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Inter font -->
@@ -11,7 +11,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f7e0c4; /* Lighter linen background */
+            background-color: #f5f5f4; /* neutral-100 for a subtle, aged paper feel */
             color: #333;
         }
         .container {
@@ -61,23 +61,23 @@
         }
     </style>
 </head>
-<body class="bg-amber-50 min-h-screen flex flex-col">
+<body class="bg-neutral-100 min-h-screen flex flex-col">
 
     <!-- Header -->
-    <header class="bg-red-800 shadow-md py-4 px-6 md:px-8">
-        <div class="container flex justify-between items-center gap-x-12"> <!-- Added gap-x-12 here -->
-            <h1 class="text-2xl md:text-3xl font-bold text-amber-50" data-lang-key="headerTitle">CharliesLAB</h1>
+    <header class="bg-stone-800 shadow-md py-4 px-6 md:px-8">
+        <div class="container flex justify-between items-center gap-x-12">
+            <h1 class="text-2xl md:text-3xl font-bold text-neutral-100" data-lang-key="headerTitle">Quaderni di Archeologia della Libya</h1>
             <nav class="flex items-center space-x-4">
-                <button id="homeViewBtn" class="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="homeBtn">Home</button>
-                <button id="aboutViewBtn" class="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="aboutBtn">About Us</button>
-                <button id="contactViewBtn" class="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="contactBtn">Contact Us</button>
+                <button id="homeViewBtn" class="bg-stone-600 hover:bg-stone-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="homeBtn">Publications</button>
+                <button id="aboutViewBtn" class="bg-stone-600 hover:bg-stone-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="aboutBtn">About Us</button>
+                <button id="contactViewBtn" class="bg-stone-600 hover:bg-stone-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="contactBtn">Contact Us</button>
                 <!-- Admin login button made less pronounced -->
-                <button id="adminLoginBtn" class="text-amber-100 hover:text-amber-50 font-semibold py-2 px-2 rounded-lg transition duration-300 text-sm" data-lang-key="adminLoginBtn">Admin Login</button>
+                <button id="adminLoginBtn" class="text-neutral-300 hover:text-neutral-100 font-semibold py-2 px-2 rounded-lg transition duration-300 text-sm" data-lang-key="adminLoginBtn">Admin Login</button>
                 
                 <!-- Language Toggle -->
                 <div class="ml-4 flex space-x-2">
-                    <button id="langEnBtn" class="text-amber-100 hover:text-amber-50 font-semibold py-1 px-2 rounded-lg text-sm bg-amber-700 transition duration-300">EN</button>
-                    <button id="langItBtn" class="text-amber-100 hover:text-amber-50 font-semibold py-1 px-2 rounded-lg text-sm bg-amber-700 transition duration-300">IT</button>
+                    <button id="langEnBtn" class="text-neutral-300 hover:text-neutral-100 font-semibold py-1 px-2 rounded-lg text-sm bg-stone-700 transition duration-300">EN</button>
+                    <button id="langItBtn" class="text-neutral-300 hover:text-neutral-100 font-semibold py-1 px-2 rounded-lg text-sm bg-stone-700 transition duration-300">IT</button>
                 </div>
             </nav>
         </div>
@@ -106,10 +106,8 @@
             </div>
         </div>
 
-        <!-- Home View Section -->
-        <section id="homeView" class="hidden bg-yellow-50 p-6 rounded-xl shadow-lg">
-            <!-- The "Discover Our Latest Publications" hero section has been removed as requested. -->
-
+        <!-- Home View Section (Publications) -->
+        <section id="homeView" class="hidden bg-neutral-50 p-6 rounded-xl shadow-lg">
             <h2 class="text-3xl font-bold mb-6 text-center text-gray-800" data-lang-key="ourPublicationsTitle">Our Publications</h2>
             <div class="mb-6">
                 <label for="publicSearchInput" class="sr-only" data-lang-key="searchPublicationsLabel">Search Publications</label>
@@ -122,35 +120,34 @@
         </section>
 
         <!-- About Us Section -->
-        <section id="aboutView" class="hidden bg-yellow-50 p-6 rounded-xl shadow-lg">
-            <h2 class="text-3xl font-bold mb-6 text-center text-gray-800" data-lang-key="aboutTitle">About CharliesLAB</h2>
-            <div class="prose max-w-none text-gray-700 leading-relaxed">
-                <p data-lang-key="aboutPara1">Welcome to <strong>CharliesLAB</strong>, your premier destination for innovative and thought-provoking publications. Founded with a passion for knowledge and creativity, we are dedicated to bringing high-quality literary works to readers worldwide.</p>
-                <p data-lang-key="aboutPara2">Our mission is to foster a love for reading and learning by publishing diverse content across various genres, from captivating fiction to insightful non-fiction and cutting-edge research. We believe in the power of words to inspire, educate, and entertain.</p>
-                <p data-lang-key="aboutPara3">At CharliesLAB, we pride ourselves on collaborating with talented authors and experts to produce books that resonate with our audience and contribute positively to the intellectual landscape. Join us on this journey of discovery through the pages of our exceptional publications.</p>
-                <p data-lang-key="aboutPara4">Thank you for choosing CharliesLAB. We look forward to sharing many more inspiring stories and valuable insights with you.</p>
+        <section id="aboutView" class="hidden bg-neutral-50 p-6 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold mb-6 text-center text-gray-800" data-lang-key="aboutTitle">About Quaderni di Archeologia della Libya</h2>
+            <div class="prose max-w-none text-gray-700 leading-relaxed space-y-4">
+                <p data-lang-key="aboutPara1">Welcome to the official website for <strong>Quaderni di Archeologia della Libya</strong>, a prestigious academic journal dedicated to archaeological research in Libya. Initiated in 1950, this esteemed series documents the significant contributions of Italian archaeological missions in the region, fostering a deeper understanding of its rich ancient history.</p>
+                <p data-lang-key="aboutPara2">After a brief hiatus, the journal proudly resumed publication in 2018 with a new series, re-establishing itself as a leading scientific platform. We provide an essential venue for scholars interested in the archaeology and history of Libya and the broader Maghreb, ensuring high-quality, peer-reviewed content.</p>
+                <p data-lang-key="aboutPara3">Our volumes embrace a multidisciplinary approach, featuring articles on epigraphy, ancient and colonial history, the history of archaeology, and territorial studies. Contributions are published in major European languages, complemented by comprehensive English and Arabic abstracts, to promote international academic exchange and collaboration.</p>
+                <p data-lang-key="aboutPara4">This website serves as a dedicated resource for the series, maintained by L'Erma di Bretschneider, a renowned academic publishing house in Rome. We are committed to upholding the highest standards of scholarly excellence and ensuring the continued global dissemination of groundbreaking research presented in the "Quaderni di Archeologia della Libya."</p>
             </div>
         </section>
 
         <!-- Contact Us Section -->
-        <section id="contactView" class="hidden bg-yellow-50 p-6 rounded-xl shadow-lg">
+        <section id="contactView" class="hidden bg-neutral-50 p-6 rounded-xl shadow-lg">
             <h2 class="text-3xl font-bold mb-6 text-center text-gray-800" data-lang-key="contactTitle">Contact Us</h2>
             <div class="text-gray-700 space-y-4">
-                <p><strong class="font-semibold" data-lang-key="contactEmailLabel">Email:</strong> <a href="mailto:info@charlieslab.com" class="text-blue-600 hover:underline">info@charlieslab.com</a></p>
-                <p><strong class="font-semibold" data-lang-key="contactPhoneLabel">Phone:</strong> +1 (555) 123-4567</p>
+                <p><strong class="font-semibold" data-lang-key="contactEmailLabel">Email:</strong> <a href="mailto:lerma@lerma.it" class="text-blue-600 hover:underline">lerma@lerma.it</a></p>
+                <p><strong class="font-semibold" data-lang-key="contactPhoneLabel">Phone:</strong> +39 06 6874127</p>
                 <p><strong class="font-semibold" data-lang-key="contactAddressLabel">Address:</strong></p>
                 <address class="not-italic">
-                    CharliesLAB Publishing<br>
-                    123 Roman Avenue<br>
-                    Ancient City, AB 12345<br>
-                    Terra, Empire
+                    L'Erma di Bretschneider<br>
+                    Via Marianna Dionigi, 57<br>
+                    00193 Roma RM, Italy
                 </address>
-                <p data-lang-key="contactMessage">We welcome your inquiries and feedback. Please feel free to reach out to us through the contact information provided above.</p>
+                <p data-lang-key="contactMessage">For inquiries regarding publications of "Quaderni di Archeologia della Libya" or other scholarly initiatives, please feel free to reach out to L'Erma di Bretschneider through the contact information provided above.</p>
             </div>
         </section>
 
         <!-- Admin Login Section -->
-        <section id="adminLoginView" class="hidden bg-yellow-50 p-8 rounded-xl shadow-lg max-w-md mx-auto">
+        <section id="adminLoginView" class="hidden bg-neutral-50 p-8 rounded-xl shadow-lg max-w-md mx-auto">
             <h2 class="text-3xl font-bold mb-8 text-center text-gray-800" data-lang-key="adminLoginTitle">Admin Login</h2>
             <form id="adminLoginForm" class="space-y-6">
                 <div>
@@ -161,14 +158,14 @@
                     <label for="password" class="block text-gray-700 text-sm font-semibold mb-2" data-lang-key="passwordLabel">Password:</label>
                     <input type="password" id="password" name="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow-md transition duration-300" data-lang-key="loginButton">Login</button>
+                <button type="submit" class="w-full bg-stone-600 hover:bg-stone-700 text-white font-semibold py-3 rounded-lg shadow-md transition duration-300" data-lang-key="loginButton">Login</button>
             </form>
             <p class="text-center text-sm text-gray-500 mt-4" data-lang-key="firebaseAuthHint">Use your Firebase Auth admin email and password.</p>
             <p class="text-sm text-red-500 mt-2 text-center" id="loginErrorMessage"></p>
         </section>
 
         <!-- Admin Dashboard Section -->
-        <section id="adminDashboardView" class="hidden bg-yellow-50 p-8 rounded-xl shadow-lg">
+        <section id="adminDashboardView" class="hidden bg-neutral-50 p-8 rounded-xl shadow-lg">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-3xl font-bold text-gray-800" data-lang-key="adminDashboardTitle">Admin Dashboard</h2>
                 <button id="adminLogoutBtn" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="logoutButton">Logout</button>
@@ -221,19 +218,19 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-red-800 text-amber-50 py-4 mt-8 px-6 md:px-8">
+    <footer class="bg-stone-800 text-neutral-100 py-4 mt-8 px-6 md:px-8">
         <div class="container text-center text-sm">
-            <p>&copy; <span id="currentYear"></span> <span data-lang-key="footerCopyright">CharliesLAB. All rights reserved.</span></p>
-            <p class="text-amber-100" data-lang-key="footerDataStorage">Data stored with Firebase Firestore and files hosted on Firebase Storage.</p>
-            <p class="text-amber-100" data-lang-key="footerUserId">Logged in User ID: <span id="currentUserId" class="font-mono"></span></p>
+            <p>&copy; <span id="currentYear"></span> <span data-lang-key="footerCopyright">L'Erma di Bretschneider. All rights reserved.</span></p>
+            <p class="text-neutral-300" data-lang-key="footerDataStorage">Website data is stored securely using Firebase services.</p>
+            <p class="text-neutral-300" data-lang-key="footerUserId">Logged in User ID: <span id="currentUserId" class="font-mono"></span></p>
         </div>
     </footer>
 
     <!-- Firebase SDKs -->
     <script type="module">
         // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, /* signInAnonymously, */ onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, query, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
@@ -250,11 +247,9 @@
         };
 
         // Firebase Initialization
-        const app = initializeApp(firebaseConfig); // Initialize Firebase app once
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-        const storage = getStorage(app);
-
+        let db;
+        let auth;
+        let storage; // Declare storage variable
         let userId = null;
         let isLoggedIn = false; // Simple client-side state
         let isAuthReady = false; // Flag to indicate if auth state has been checked
@@ -262,29 +257,26 @@
         // --- Translation Logic ---
         const translations = {
             en: {
-                pageTitle: "CharliesLAB - Book Management",
-                headerTitle: "CharliesLAB",
-                homeBtn: "Home",
+                pageTitle: "Quaderni di Archeologia della Libya - Publications",
+                headerTitle: "Quaderni di Archeologia della Libya",
+                homeBtn: "Publications",
                 aboutBtn: "About Us",
                 contactBtn: "Contact Us",
                 adminLoginBtn: "Admin Login",
-                heroTitle: "Discover Our Latest Publications", // This title is effectively removed by HTML edit
-                heroSubtitle: "Explore a world of knowledge and creativity.", // This subtitle is effectively removed by HTML edit
-                exploreBooksBtn: "Explore Publications", // This button is effectively removed by HTML edit
                 ourPublicationsTitle: "Our Publications",
                 searchPublicationsLabel: "Search Publications",
                 searchPlaceholder: "Search by title or author...",
                 noPublicationsMessage: "No publications yet. Check back soon!",
-                aboutTitle: "About CharliesLAB",
-                aboutPara1: "Welcome to <strong>CharliesLAB</strong>, your premier destination for innovative and thought-provoking publications. Founded with a passion for knowledge and creativity, we are dedicated to bringing high-quality literary works to readers worldwide.",
-                aboutPara2: "Our mission is to foster a love for reading and learning by publishing diverse content across various genres, from captivating fiction to insightful non-fiction and cutting-edge research. We believe in the power of words to inspire, educate, and entertain.",
-                aboutPara3: "At CharliesLAB, we pride ourselves on collaborating with talented authors and experts to produce books that resonate with our audience and contribute positively to the intellectual landscape. Join us on this journey of discovery through the pages of our exceptional publications.",
-                aboutPara4: "Thank you for choosing CharliesLAB. We look forward to sharing many more inspiring stories and valuable insights with you.",
+                aboutTitle: "About Quaderni di Archeologia della Libya",
+                aboutPara1: "Welcome to the official website for <strong>Quaderni di Archeologia della Libya</strong>, a prestigious academic journal dedicated to archaeological research in Libya. Initiated in 1950, this esteemed series documents the significant contributions of Italian archaeological missions in the region, fostering a deeper understanding of its rich ancient history.",
+                aboutPara2: "After a brief hiatus, the journal proudly resumed publication in 2018 with a new series, re-establishing itself as a leading scientific platform. We provide an essential venue for scholars interested in the archaeology and history of Libya and the broader Maghreb, ensuring high-quality, peer-reviewed content.",
+                aboutPara3: "Our volumes embrace a multidisciplinary approach, featuring articles on epigraphy, ancient and colonial history, the history of archaeology, and territorial studies. Contributions are published in major European languages, complemented by comprehensive English and Arabic abstracts, to promote international academic exchange and collaboration.",
+                aboutPara4: "This website serves as a dedicated resource for the series, maintained by L'Erma di Bretschneider, a renowned academic publishing house in Rome. We are committed to upholding the highest standards of scholarly excellence and ensuring the continued global dissemination of groundbreaking research presented in the \"Quaderni di Archeologia della Libya.\"",
                 contactTitle: "Contact Us",
                 contactEmailLabel: "Email:",
                 contactPhoneLabel: "Phone:",
                 contactAddressLabel: "Address:",
-                contactMessage: "We welcome your inquiries and feedback. Please feel free to reach out to us through the contact information provided above.",
+                contactMessage: "For inquiries regarding publications of \"Quaderni di Archeologia della Libya\" or other scholarly initiatives, please feel free to reach out to L'Erma di Bretschneider through the contact information provided above.",
                 adminLoginTitle: "Admin Login",
                 usernameLabel: "Username (Email):",
                 passwordLabel: "Password:",
@@ -302,8 +294,8 @@
                 cancelEditButton: "Cancel Edit",
                 existingPublicationsTitle: "Existing Publications",
                 noPublicationsUploadedYet: "No publications uploaded yet.",
-                footerCopyright: "CharliesLAB. All rights reserved.",
-                footerDataStorage: "Data stored with Firebase Firestore and files hosted on Firebase Storage.",
+                footerCopyright: "L'Erma di Bretschneider. All rights reserved.",
+                footerDataStorage: "Website data is stored securely using Firebase services.",
                 footerUserId: "Logged in User ID:",
                 // Modals
                 modalOkBtn: "OK",
@@ -366,32 +358,30 @@
                 msgNoPdfSelected: "No PDF file selected.",
                 msgEditCancelled: "Edit cancelled.",
                 msgLoginRequiredToDelete: "You must be logged in as an admin to delete publications.",
-                msgNoDescriptionProvided: "No description provided."
+                msgNoDescriptionProvided: "No description provided.",
+                msgLoginRequiredToEdit: "You must be logged in as an admin to edit publications."
             },
             it: {
-                pageTitle: "CharliesLAB - Gestione Libri",
-                headerTitle: "CharliesLAB",
-                homeBtn: "Home",
+                pageTitle: "Quaderni di Archeologia della Libya - Pubblicazioni",
+                headerTitle: "Quaderni di Archeologia della Libya",
+                homeBtn: "Pubblicazioni",
                 aboutBtn: "Chi Siamo",
                 contactBtn: "Contattaci",
                 adminLoginBtn: "Accesso Admin",
-                heroTitle: "Scopri le Nostre Ultime Pubblicazioni", // This title is effectively removed by HTML edit
-                heroSubtitle: "Esplora un mondo di conoscenza e creatività.", // This subtitle is effectively removed by HTML edit
-                exploreBooksBtn: "Esplora Pubblicazioni", // This button is effectively removed by HTML edit
                 ourPublicationsTitle: "Le Nostre Pubblicazioni",
                 searchPublicationsLabel: "Cerca Pubblicazioni",
                 searchPlaceholder: "Cerca per titolo o autore...",
                 noPublicationsMessage: "Nessuna pubblicazione ancora. Torna presto!",
-                aboutTitle: "Chi Siamo CharliesLAB",
-                aboutPara1: "Benvenuti a <strong>CharliesLAB</strong>, la vostra destinazione principale per pubblicazioni innovative e stimolanti. Fondati con la passione per la conoscenza e la creatività, ci dedichiamo a portare opere letterarie di alta qualità ai lettori di tutto il mondo.",
-                aboutPara2: "La nostra missione è promuovere l'amore per la lettura e l'apprendimento pubblicando contenuti diversi in vari generi, dalla narrativa avvincente alla saggistica perspicace e alla ricerca all'avanguardia. Crediamo nel potere delle parole di ispirare, educare e intrattenere.",
-                aboutPara3: "In CharliesLAB, siamo orgogliosi di collaborare con autori ed esperti di talento per produrre libri che risuonano con il nostro pubblico e contribuiscono positivamente al panorama intellettuale. Unisciti a noi in questo viaggio di scoperta attraverso le pagine delle nostre eccezionali pubblicazioni.",
-                aboutPara4: "Grazie per aver scelto CharliesLAB. Non vediamo l'ora di condividere molte altre storie ispiratrici e preziose intuizioni con voi.",
+                aboutTitle: "Chi Siamo Quaderni di Archeologia della Libya",
+                aboutPara1: "Benvenuti nel sito ufficiale dei <strong>Quaderni di Archeologia della Libya</strong>, una prestigiosa rivista accademica dedicata alla ricerca archeologica in Libia. Iniziata nel 1950, questa stimata serie documenta i significativi contributi delle missioni archeologiche italiane nella regione, promuovendo una comprensione più approfondita della sua ricca storia antica.",
+                aboutPara2: "Dopo una breve interruzione, la rivista ha ripreso con orgoglio la pubblicazione nel 2018 con una nuova serie, ristabilendosi come una delle principali piattaforme scientifiche. Offriamo una sede essenziale per gli studiosi interessati all'archeologia e alla storia della Libia e del Maghreb, garantendo contenuti di alta qualità e sottoposti a revisione paritaria.",
+                aboutPara3: "I nostri volumi adottano un approccio multidisciplinare, presentando articoli su epigrafia, storia antica e coloniale, storia dell'archeologia e studi territoriali. I contributi sono pubblicati nelle principali lingue europee, integrati da abstract completi in inglese e arabo, per promuovere lo scambio e la collaborazione accademica internazionale.",
+                aboutPara4: "Questo sito web funge da risorsa dedicata alla serie, gestito da L'Erma di Bretschneider, una rinomata casa editrice accademica di Roma. Ci impegniamo a mantenere i più alti standard di eccellenza accademica e a garantire la continua diffusione globale delle ricerche innovative presentate nei \"Quaderni di Archeologia della Libya.\"",
                 contactTitle: "Contattaci",
                 contactEmailLabel: "Email:",
                 contactPhoneLabel: "Telefono:",
                 contactAddressLabel: "Indirizzo:",
-                contactMessage: "Accogliamo con favore le vostre domande e feedback. Non esitate a contattarci tramite le informazioni di contatto fornite sopra.",
+                contactMessage: "Per domande relative alle pubblicazioni di \"Quaderni di Archeologia della Libya\" o ad altre iniziative accademiche, non esitate a contattare L'Erma di Bretschneider tramite le informazioni di contatto fornite sopra.",
                 adminLoginTitle: "Accesso Admin",
                 usernameLabel: "Nome Utente (Email):",
                 passwordLabel: "Password:",
@@ -409,8 +399,8 @@
                 cancelEditButton: "Annulla Modifica",
                 existingPublicationsTitle: "Pubblicazioni Esistenti",
                 noPublicationsUploadedYet: "Nessuna pubblicazione caricata ancora.",
-                footerCopyright: "CharliesLAB. Tutti i diritti riservati.",
-                footerDataStorage: "Dati archiviati con Firebase Firestore e file ospitati su Firebase Storage.",
+                footerCopyright: "L'Erma di Bretschneider. Tutti i diritti riservati.",
+                footerDataStorage: "I dati del sito web sono archiviati in modo sicuro utilizzando i servizi Firebase.",
                 footerUserId: "ID Utente Connesso:",
                 // Modals
                 modalOkBtn: "OK",
@@ -473,7 +463,8 @@
                 msgNoPdfSelected: "Nessun file PDF selezionato.",
                 msgEditCancelled: "Modifica annullata.",
                 msgLoginRequiredToDelete: "Devi essere loggato come amministratore per eliminare pubblicazioni.",
-                msgNoDescriptionProvided: "Nessuna descrizione fornita."
+                msgNoDescriptionProvided: "Nessuna descrizione fornita.",
+                msgLoginRequiredToEdit: "Devi essere loggato come amministratore per modificare le pubblicazioni."
             }
         };
 
@@ -641,138 +632,435 @@
             }
         });
 
-        // --- View Management ---
-        const homeView = document.getElementById('homeView');
-        const aboutView = document.getElementById('aboutView');
-        const contactView = document.getElementById('contactView');
-        const adminLoginView = document.getElementById('adminLoginView');
-        const adminDashboardView = document.getElementById('adminDashboardView');
+        // Firebase Initialization and Authentication state management
+        async function initializeFirebase() {
+            try {
+                // Get the existing app instance or initialize a new one if none exists
+                const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+                
+                db = getFirestore(app);
+                auth = getAuth(app);
+                storage = getStorage(app); // Initialize Firebase Storage here!
 
-        const homeViewBtn = document.getElementById('homeViewBtn');
-        const aboutViewBtn = document.getElementById('aboutViewBtn');
-        const contactViewBtn = document.getElementById('contactViewBtn');
-        const adminLoginBtn = document.getElementById('adminLoginBtn');
-        const adminLogoutBtn = document.getElementById('adminLogoutBtn');
-        // Removed exploreBooksBtn since the hero section it was part of is removed.
+                // This listener ensures that setupEventListeners runs ONLY after auth state is determined.
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("Authenticated with user ID:", userId);
+                        isLoggedIn = true; // Set isLoggedIn here based on actual auth state
+                    } else {
+                        console.warn(translations[currentLang]['msgAuthWarning']);
+                        userId = null;
+                        isLoggedIn = false; // Set isLoggedIn here
+                    }
+                    isAuthReady = true; // Auth state has been checked
+
+                    // Now that auth is ready, set up event listeners and initial view.
+                    setupEventListeners(); // CALL setupEventListeners here
+                    
+                    const currentUserIdElement = document.getElementById('currentUserId');
+                    if (currentUserIdElement) {
+                        currentUserIdElement.textContent = userId || translations[currentLang]['footerUserId'] + ' ' + translations[currentLang]['msgNotAvailable'];
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                showMessageModal("msgFirebaseInitFailed");
+            }
+        }
+
+        // --- View Management ---
+        // Variables for views and buttons - these will be assigned inside setupEventListeners
+        // Declared as `null` initially to ensure they are assigned later.
+        let homeView = null, aboutView = null, contactView = null, adminLoginView = null, adminDashboardView = null;
+        let homeViewBtn = null, aboutViewBtn = null, contactViewBtn = null, adminLoginBtn = null, adminLogoutBtn = null;
+        let publicSearchInput = null;
+        let adminLoginForm = null, usernameInput = null, passwordInput = null, loginErrorMessage = null;
+        let uploadBookForm = null, bookTitleInput = null, bookAuthorInput = null, bookDescriptionInput = null, coverImageFileInput = null, coverImageFileNameDisplay = null, uploadedCoverPreview = null, pdfFileInput = null, pdfFileNameDisplay = null, submitBookBtn = null, cancelEditBtn = null, formTitle = null;
+        let adminBooksList = null, noAdminBooksMessage = null, noBooksMessage = null, booksContainer = null;
 
         function showView(viewId) {
-            // Hide all views
+            // All these variables should be assigned in setupEventListeners, which runs once auth is ready.
             const allViews = [homeView, aboutView, contactView, adminLoginView, adminDashboardView];
             allViews.forEach(view => {
-                if (view) { // Check if element exists before manipulating
+                if (view) {
                     view.classList.remove('flex');
                     view.classList.add('hidden');
                 }
             });
 
-            // Show the target view
             const targetView = document.getElementById(viewId);
             if (targetView) {
                 targetView.classList.remove('hidden');
-                targetView.classList.add('flex'); // Ensure the section itself uses flex to center content if needed
+                targetView.classList.add('flex');
             }
 
-            // Specific actions for views
             if (viewId === 'homeView') {
-                if (userId) { // Load books only if authenticated
+                if (userId) {
                     loadBooks();
                 } else {
-                    const booksContainer = document.getElementById('booksContainer');
-                    const noBooksMessageElement = document.getElementById('noBooksMessage');
-                    if (booksContainer && noBooksMessageElement) {
-                        booksContainer.innerHTML = ''; // Clear any previous content
-                        noBooksMessageElement.textContent = translations[currentLang]['msgPublicContentAuthRequired']; // Use translation key
-                        noBooksMessageElement.classList.remove('hidden');
+                    if (booksContainer && noBooksMessage) {
+                        booksContainer.innerHTML = '';
+                        noBooksMessage.textContent = translations[currentLang]['msgPublicContentAuthRequired'];
+                        noBooksMessage.classList.remove('hidden');
                     }
                 }
             } else if (viewId === 'adminDashboardView' && isLoggedIn) {
                 loadBooksForAdmin();
             }
+            setLanguage(currentLang); // Reapply translations after view change
         }
 
-        // Initial view setup happens in window.onload now.
+        // Function to set up all event listeners and initial view after DOM is ready AND Firebase Auth is ready
+        function setupEventListeners() {
+            // Assign ALL DOM elements to variables here
+            homeView = document.getElementById('homeView');
+            aboutView = document.getElementById('aboutView');
+            contactView = document.getElementById('contactView');
+            adminLoginView = document.getElementById('adminLoginView');
+            adminDashboardView = document.getElementById('adminDashboardView');
 
-        // Event Listeners for Navigation
-        // These are now guaranteed to be available in window.onload
-        if (homeViewBtn) homeViewBtn.addEventListener('click', () => showView('homeView'));
-        if (aboutViewBtn) aboutViewBtn.addEventListener('click', () => showView('aboutView'));
-        if (contactViewBtn) contactViewBtn.addEventListener('click', () => showView('contactView'));
-        if (adminLoginBtn) adminLoginBtn.addEventListener('click', () => showView('adminLoginView'));
-        // Removed exploreBooksBtn event listener as the button is gone.
+            homeViewBtn = document.getElementById('homeViewBtn');
+            aboutViewBtn = document.getElementById('aboutViewBtn');
+            contactViewBtn = document.getElementById('contactViewBtn');
+            adminLoginBtn = document.getElementById('adminLoginBtn');
+            adminLogoutBtn = document.getElementById('adminLogoutBtn');
+            
+            publicSearchInput = document.getElementById('publicSearchInput');
 
+            adminLoginForm = document.getElementById('adminLoginForm');
+            usernameInput = document.getElementById('username');
+            passwordInput = document.getElementById('password');
+            loginErrorMessage = document.getElementById('loginErrorMessage');
 
-        if (adminLogoutBtn) {
-            adminLogoutBtn.addEventListener('click', async () => {
-                try {
-                    await signOut(auth); // Use Firebase signOut from auth instance
-                    isLoggedIn = false;
-                    showView('homeView');
-                    showMessageModal("msgLoggedOut"); // Use translation key
-                } catch (error) {
-                    console.error("Error signing out:", error);
-                    showMessageModal("msgErrorLoggingOut"); // Use translation key
-                }
-            });
-        }
+            uploadBookForm = document.getElementById('uploadBookForm');
+            bookTitleInput = document.getElementById('bookTitle');
+            bookAuthorInput = document.getElementById('bookAuthor');
+            bookDescriptionInput = document.getElementById('bookDescription');
+            coverImageFileInput = document.getElementById('coverImageFile');
+            coverImageFileNameDisplay = document.getElementById('coverImageFileNameDisplay');
+            uploadedCoverPreview = document.getElementById('uploadedCoverPreview');
+            pdfFileInput = document.getElementById('pdfFile');
+            pdfFileNameDisplay = document.getElementById('pdfFileNameDisplay');
+            submitBookBtn = document.getElementById('submitBookBtn');
+            cancelEditBtn = document.getElementById('cancelEditBtn');
+            formTitle = document.getElementById('formTitle');
+            adminBooksList = document.getElementById('adminBooksList');
+            noAdminBooksMessage = document.getElementById('noAdminBooksMessage');
+            noBooksMessage = document.getElementById('noBooksMessage');
+            booksContainer = document.getElementById('booksContainer');
 
-        // --- Admin Login Logic ---
-        const adminLoginForm = document.getElementById('adminLoginForm');
-        const usernameInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
-        const loginErrorMessage = document.getElementById('loginErrorMessage');
+            // Set initial language and display home view
+            setLanguage(currentLang); // Apply initial translations
+            showView('homeView'); // Show the first view, which will trigger loadBooks
 
-        if (adminLoginForm) {
-            adminLoginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const email = usernameInput.value;
-                const password = passwordInput.value;
+            // Attach Event Listeners for Navigation
+            if (homeViewBtn) homeViewBtn.addEventListener('click', () => showView('homeView'));
+            if (aboutViewBtn) aboutViewBtn.addEventListener('click', () => showView('aboutView'));
+            if (contactViewBtn) contactViewBtn.addEventListener('click', () => showView('contactView'));
+            if (adminLoginBtn) adminLoginBtn.addEventListener('click', () => showView('adminLoginView'));
+            
+            // The exploreBooksBtn was removed from HTML, so its listener is no longer needed.
 
-                try {
-                    await signInWithEmailAndPassword(auth, email, password);
-                    isLoggedIn = true;
-                    showView('adminDashboardView');
-                    if (loginErrorMessage) loginErrorMessage.textContent = '';
-                    if (usernameInput) usernameInput.value = '';
-                    if (passwordInput) passwordInput.value = '';
-                    loadBooksForAdmin();
-                } catch (error) {
-                    console.error("Firebase Login Error:", error.code, error.message);
-                    if (loginErrorMessage) {
-                        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-                            loginErrorMessage.textContent = translations[currentLang]['msgLoginInvalid'];
-                        } else if (error.code === 'auth/too-many-requests') {
-                            loginErrorMessage.textContent = translations[currentLang]['msgLoginTooManyAttempts'];
-                        } else {
-                            loginErrorMessage.textContent = translations[currentLang]['msgLoginFailedGeneric'] + error.message;
+            if (adminLogoutBtn) {
+                adminLogoutBtn.addEventListener('click', async () => {
+                    try {
+                        await signOut(auth);
+                        isLoggedIn = false;
+                        showView('homeView');
+                        showMessageModal("msgLoggedOut");
+                    } catch (error) {
+                        console.error("Error signing out:", error);
+                        showMessageModal("msgErrorLoggingOut");
+                    }
+                });
+            }
+
+            // Admin Login Form Listener
+            if (adminLoginForm) {
+                adminLoginForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const email = usernameInput.value;
+                    const password = passwordInput.value;
+
+                    try {
+                        await signInWithEmailAndPassword(auth, email, password);
+                        isLoggedIn = true;
+                        showView('adminDashboardView');
+                        if (loginErrorMessage) loginErrorMessage.textContent = '';
+                        if (usernameInput) usernameInput.value = '';
+                        if (passwordInput) passwordInput.value = '';
+                        loadBooksForAdmin();
+                    } catch (error) {
+                        console.error("Firebase Login Error:", error.code, error.message);
+                        if (loginErrorMessage) {
+                            if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                                loginErrorMessage.textContent = translations[currentLang]['msgLoginInvalid'];
+                            } else if (error.code === 'auth/too-many-requests') {
+                                loginErrorMessage.textContent = translations[currentLang]['msgLoginTooManyAttempts'];
+                            } else {
+                                loginErrorMessage.textContent = translations[currentLang]['msgLoginFailedGeneric'] + error.message;
+                            }
                         }
                     }
-                }
-            });
-        }
+                });
+            }
 
+            // File input change listeners
+            if (coverImageFileInput) {
+                coverImageFileInput.addEventListener('change', async (e) => {
+                    if (!isLoggedIn) {
+                        showMessageModal("msgLoginRequiredForUpload");
+                        e.target.value = ''; // Clear selection
+                        return;
+                    }
+                    if (e.target.files.length > 0) {
+                        const file = e.target.files[0];
+                        currentCoverImageFile = file; // Store the actual file object for form reset
+                        currentCoverImageFileName = file.name;
+
+                        // Display a loading message
+                        if(uploadedCoverPreview) {
+                            uploadedCoverPreview.src = ''; // Clear preview
+                            uploadedCoverPreview.style.display = 'none';
+                        }
+                        if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = `${translations[currentLang]['msgUploading']} ${file.name}...`;
+
+                        // Upload to Firebase Storage
+                        const imageStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/covers/${Date.now()}_${file.name}`);
+                        try {
+                            const snapshot = await uploadBytes(imageStorageRef, file);
+                            currentCoverImageURL = await getDownloadURL(snapshot.ref);
+                            if(uploadedCoverPreview) {
+                                uploadedCoverPreview.src = currentCoverImageURL;
+                                uploadedCoverPreview.style.display = 'block';
+                            }
+                            if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = `${translations[currentLang]['msgUploaded']}: ${currentCoverImageFileName}`;
+                            showMessageModal("msgCoverUploaded");
+                        } catch (error) {
+                            console.error("Error uploading cover image to Firebase Storage:", error);
+                            showMessageModal(`${translations[currentLang]['msgFailedUploadCover']}: ${error.message}. ${translations[currentLang]['msgCheckStorageRulesOrNetwork']}`);
+                            currentCoverImageFile = null; // Reset file object
+                            currentCoverImageFileName = '';
+                            if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = translations[currentLang]['msgUploadFailed'];
+                            if(uploadedCoverPreview) {
+                                uploadedCoverPreview.style.display = 'none';
+                                uploadedCoverPreview.src = '';
+                            }
+                        }
+                    } else {
+                        currentCoverImageFile = null;
+                        currentCoverImageFileName = '';
+                        if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = '';
+                        currentCoverImageURL = '';
+                        if(uploadedCoverPreview) {
+                            uploadedCoverPreview.src = '';
+                            uploadedCoverPreview.style.display = 'none';
+                        }
+                    }
+                });
+            }
+
+            if (pdfFileInput) {
+                pdfFileInput.addEventListener('change', async (e) => {
+                    if (!isLoggedIn) {
+                        showMessageModal("msgLoginRequiredForUpload");
+                        e.target.value = '';
+                        return;
+                    }
+                    if (e.target.files.length > 0) {
+                        const file = e.target.files[0];
+                        currentPdfFile = file; // Store the actual file object for form reset
+                        currentPdfFileName = file.name;
+
+                        // Display a loading message
+                        if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = `${translations[currentLang]['msgUploading']} ${file.name}...`;
+
+                        // Upload to Firebase Storage
+                        const pdfStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/pdfs/${Date.now()}_${file.name}`);
+                        try {
+                            const snapshot = await uploadBytes(pdfStorageRef, file);
+                            currentPdfURL = await getDownloadURL(snapshot.ref);
+                            if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = `${translations[currentLang]['msgUploaded']}: ${currentPdfFileName}`;
+                            showMessageModal("msgPdfUploaded");
+                        } catch (error) {
+                            console.error("Error uploading PDF to Firebase Storage:", error);
+                            showMessageModal(`${translations[currentLang]['msgFailedUploadPdf']}: ${error.message}. ${translations[currentLang]['msgCheckStorageRulesOrNetwork']}`);
+                            currentPdfFile = null; // Reset file object
+                            currentPdfFileName = '';
+                            if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = translations[currentLang]['msgUploadFailed'];
+                            currentPdfURL = '';
+                        }
+                    } else {
+                        currentPdfFile = null;
+                        currentPdfFileName = '';
+                        if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = '';
+                        currentPdfURL = '';
+                    }
+                });
+            }
+
+            // Upload/Edit Form Listener
+            if (uploadBookForm) {
+                uploadBookForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!isLoggedIn) {
+                        showMessageModal("msgLoginRequiredToAddEdit");
+                        return;
+                    }
+                    if (!isAuthReady) {
+                        showMessageModal("msgFirebaseNotReady");
+                        return;
+                    }
+
+                    const title = bookTitleInput.value.trim();
+                    const author = bookAuthorInput.value.trim();
+                    const description = bookDescriptionInput.value.trim();
+
+                    let pdfUrlToSave = currentPdfURL;
+                    let coverImageUrlToSave = currentCoverImageURL;
+                    let pdfFileNameToSave = currentPdfFileName;
+                    let coverImageFileNameToSave = currentCoverImageFileName;
+
+                    if (!title || !author) {
+                        showMessageModal("msgFillTitleAuthor");
+                        return;
+                    }
+
+                    if (editingBookId) {
+                        const bookSnap = await getDoc(doc(db, BOOKS_COLLECTION_PATH, editingBookId));
+                        const existingBook = bookSnap.exists() ? bookSnap.data() : null;
+
+                        if (!currentPdfFile) { // If no new PDF was selected, use existing URL and filename
+                            pdfUrlToSave = existingBook?.pdfUrl || '';
+                            pdfFileNameToSave = existingBook?.pdfFileName || '';
+                        }
+                        if (!currentCoverImageFile) { // If no new cover was selected, use existing URL and filename
+                            coverImageUrlToSave = existingBook?.coverImageUrl || '';
+                            coverImageFileNameToSave = existingBook?.coverImageFileName || '';
+                        }
+                    } else { // For new books, ensure files are selected AND uploaded
+                        if (!currentPdfFile || !currentPdfURL) {
+                            showMessageModal("msgSelectPdfWaitUpload");
+                            return;
+                        }
+                        if (!currentCoverImageFile || !currentCoverImageURL) {
+                            showMessageModal("msgSelectCoverWaitUpload");
+                            return;
+                        }
+                    }
+
+                    // Final check that URLs are available after all logic
+                    if (!pdfUrlToSave) {
+                        showMessageModal("msgPdfMissing");
+                        return;
+                    }
+                    if (!coverImageUrlToSave) {
+                        showMessageModal("msgCoverMissing");
+                        return;
+                    }
+
+                    if (submitBookBtn) {
+                        submitBookBtn.textContent = editingBookId ? translations[currentLang]['msgUpdating'] : translations[currentLang]['msgAdding'];
+                        submitBookBtn.disabled = true;
+                    }
+                    
+                    try {
+                        const bookData = {
+                            title: title,
+                            author: author,
+                            description: description,
+                            coverImageUrl: coverImageUrlToSave,
+                            coverImageFileName: coverImageFileNameToSave, // Corrected this line
+                            pdfUrl: pdfUrlToSave,
+                            pdfFileName: pdfFileNameToSave,
+                            timestamp: new Date().toISOString()
+                        };
+
+                        if (editingBookId) {
+                            await updateDoc(doc(db, BOOKS_COLLECTION_PATH, editingBookId), bookData);
+                            showMessageModal("msgPublicationUpdated");
+                        } else {
+                            await addDoc(collection(db, BOOKS_COLLECTION_PATH), bookData);
+                            showMessageModal("msgPublicationAdded");
+                        }
+
+                        resetBookForm();
+                    } catch (error) {
+                        console.error("Error saving document: ", error);
+                        showMessageModal(`${translations[currentLang]['msgErrorSavingPublication']}: ${error.message}. ${translations[currentLang]['msgCheckFirestoreRules']}`);
+                    } finally {
+                        if (submitBookBtn) {
+                            submitBookBtn.textContent = editingBookId ? translations[currentLang]['updatePublicationButton'] : translations[currentLang]['addPublicationButton'];
+                            submitBookBtn.disabled = false;
+                            setLanguage(currentLang);
+                        }
+                    }
+                });
+            }
+
+            // Cancel Edit Listener
+            if (cancelEditBtn) {
+                cancelEditBtn.addEventListener('click', () => {
+                    resetBookForm();
+                    showMessageModal("msgEditCancelled");
+                });
+            }
+
+            // Public Search Input Listener
+            if (publicSearchInput) {
+                publicSearchInput.addEventListener('input', (e) => {
+                    loadBooks(e.target.value);
+                });
+            }
+
+            // Modals backdrop click
+            const messageModal = document.getElementById('messageModal');
+            if (messageModal) {
+                messageModal.addEventListener('click', function(event) {
+                    if (event.target === messageModal) {
+                        closeMessageModal();
+                    }
+                });
+            }
+            
+            const confirmModal = document.getElementById('confirmModal');
+            if (confirmModal) {
+                confirmModal.addEventListener('click', function(event) {
+                    if (event.target === confirmModal) {
+                        confirmModal.classList.remove('flex');
+                        confirmModal.classList.add('hidden');
+                        if (confirmCallback) {
+                            confirmCallback(false);
+                            confirmCallback = null;
+                        }
+                    }
+                });
+            }
+        } // End of setupEventListeners
 
         // --- Book Management (Firestore) ---
         const BOOKS_COLLECTION_PATH = `artifacts/${firebaseConfig.projectId}/public/data/books`;
-        const publicSearchInput = document.getElementById('publicSearchInput');
 
         // Function to load and display books in the public view
         async function loadBooks(searchTerm = '') {
             if (!isAuthReady || !userId) {
-                const booksContainer = document.getElementById('booksContainer');
-                const noBooksMessageElement = document.getElementById('noBooksMessage');
-                if (booksContainer && noBooksMessageElement) {
+                if (noBooksMessage) {
+                    noBooksMessage.innerHTML = translations[currentLang]['msgPublicContentAuthRequired'];
+                    noBooksMessage.classList.remove('hidden');
+                }
+                if (booksContainer) {
                     booksContainer.innerHTML = '';
-                    noBooksMessageElement.textContent = translations[currentLang]['msgPublicContentAuthRequired'];
-                    noBooksMessageElement.classList.remove('hidden');
                 }
                 return;
             }
 
-            const booksContainer = document.getElementById('booksContainer');
-            const noBooksMessageElement = document.getElementById('noBooksMessage');
-            
-            if (noBooksMessageElement) noBooksMessageElement.classList.add('hidden');
-            if (booksContainer) booksContainer.innerHTML = '';
+            if (!booksContainer) { console.error("booksContainer not found in loadBooks."); return; }
+            if (!noBooksMessage) { console.error("noBooksMessage not found in loadBooks."); return; }
+
+            noBooksMessage.classList.add('hidden');
+            booksContainer.innerHTML = '';
 
             try {
                 const q = query(collection(db, BOOKS_COLLECTION_PATH));
@@ -789,48 +1077,37 @@
                         (book.description && book.description.toLowerCase().includes(lowerCaseSearchTerm))
                     );
 
-                    if (booksContainer) {
-                        booksContainer.innerHTML = '';
-                        if (filteredBooks.length === 0) {
-                            if (noBooksMessageElement) {
-                                noBooksMessageElement.textContent = translations[currentLang]['msgNoBooksFoundSearch'];
-                                noBooksMessageElement.classList.remove('hidden');
-                            }
-                            return;
-                        }
-
-                        if (noBooksMessageElement) noBooksMessageElement.classList.add('hidden');
-
-                        filteredBooks.forEach((book) => {
-                            const bookCard = `
-                                <div class="bg-yellow-100 p-4 rounded-lg shadow-md flex flex-col items-center text-center transition duration-300 hover:shadow-lg">
-                                    <img src="${book.coverImageUrl || 'https://placehold.co/150x200/cccccc/333333?text=No+Cover'}" alt="${book.title}" class="w-36 h-48 object-cover rounded-md mb-4 shadow-sm">
-                                    <h3 class="text-xl font-semibold mb-2 text-gray-800">${book.title}</h3>
-                                    <p class="text-gray-600 text-sm mb-3">${translations[currentLang]['byAuthor']} ${book.author}</p>
-                                    <p class="text-gray-700 text-sm overflow-hidden text-ellipsis h-12 mb-4">${book.description || (translations[currentLang]['msgNoDescriptionProvided'])}</p>
-                                    <a href="${book.pdfUrl || '#'}" target="_blank" class="mt-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ${!book.pdfUrl ? 'opacity-50 cursor-not-allowed' : ''}" ${!book.pdfUrl ? `onclick="event.preventDefault(); showMessageModal('msgPdfNotAvailable');"` : ''}>
-                                        ${translations[currentLang]['downloadPdfButton']}
-                                    </a>
-                                </div>
-                            `;
-                            booksContainer.innerHTML += bookCard;
-                        });
+                    booksContainer.innerHTML = '';
+                    if (filteredBooks.length === 0) {
+                        noBooksMessage.textContent = translations[currentLang]['msgNoBooksFoundSearch'];
+                        noBooksMessage.classList.remove('hidden');
+                        return;
                     }
+
+                    noBooksMessage.classList.add('hidden');
+
+                    filteredBooks.forEach((book) => {
+                        const bookCard = `
+                            <div class="bg-neutral-100 p-4 rounded-lg shadow-md flex flex-col items-center text-center transition duration-300 hover:shadow-lg">
+                                <img src="${book.coverImageUrl || 'https://placehold.co/150x200/cccccc/333333?text=No+Cover'}" alt="${book.title}" class="w-36 h-48 object-cover rounded-md mb-4 shadow-sm">
+                                <h3 class="text-xl font-semibold mb-2 text-gray-800">${book.title}</h3>
+                                <p class="text-gray-600 text-sm mb-3">${translations[currentLang]['byAuthor']} ${book.author}</p>
+                                <p class="text-gray-700 text-sm overflow-hidden text-ellipsis h-12 mb-4">${book.description || (translations[currentLang]['msgNoDescriptionProvided'])}</p>
+                                <a href="${book.pdfUrl || '#'}" target="_blank" class="mt-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ${!book.pdfUrl ? 'opacity-50 cursor-not-allowed' : ''}" ${!book.pdfUrl ? `onclick="event.preventDefault(); showMessageModal('msgPdfNotAvailable');"` : ''}>
+                                    ${translations[currentLang]['downloadPdfButton']}
+                                </a>
+                            </div>
+                        `;
+                        booksContainer.innerHTML += bookCard;
+                    });
                 });
             } catch (error) {
                 console.error("Error setting up Firestore listener for books:", error);
                 showMessageModal("msgErrorLoadingPublications");
-                if (noBooksMessageElement) {
-                    noBooksMessageElement.textContent = translations[currentLang]['msgErrorLoadingPublications'];
+                if (noBooksMessage) {
+                    noBooksMessage.textContent = translations[currentLang]['msgErrorLoadingPublications'];
                 }
             }
-        }
-
-        // Add event listener for public search input
-        if (publicSearchInput) {
-            publicSearchInput.addEventListener('input', (e) => {
-                loadBooks(e.target.value);
-            });
         }
 
         // Function to load and display books in the admin dashboard
@@ -839,16 +1116,16 @@
                 console.warn("Not authorized to load admin books. Please log in.");
                 return;
             }
-            const adminBooksList = document.getElementById('adminBooksList');
-            const noAdminBooksMessage = document.getElementById('noAdminBooksMessage');
+            if (!adminBooksList) { console.error("adminBooksList not found in loadBooksForAdmin."); return; }
+            if (!noAdminBooksMessage) { console.error("noAdminBooksMessage not found in loadBooksForAdmin."); return; }
 
-            if (adminBooksList) adminBooksList.innerHTML = '';
-            if (noAdminBooksMessage) noAdminBooksMessage.classList.add('hidden');
+            adminBooksList.innerHTML = '';
+            noAdminBooksMessage.classList.add('hidden');
 
             try {
                 const q = query(collection(db, BOOKS_COLLECTION_PATH));
                 onSnapshot(q, (querySnapshot) => {
-                    if (adminBooksList) adminBooksList.innerHTML = '';
+                    adminBooksList.innerHTML = '';
                     if (querySnapshot.empty) {
                         if (noAdminBooksMessage) {
                             noAdminBooksMessage.classList.remove('hidden');
@@ -857,7 +1134,7 @@
                         return;
                     }
 
-                    if (noAdminBooksMessage) noAdminBooksMessage.classList.add('hidden');
+                    noAdminBooksMessage.classList.add('hidden');
 
                     querySnapshot.forEach((docRef) => {
                         const book = docRef.data();
@@ -865,8 +1142,8 @@
                         const pdfDisplay = book.pdfFileName ? `${translations[currentLang]['uploadPdfFileLabel']}: ${book.pdfFileName}` : translations[currentLang]['msgNoCurrentPdf'];
 
                         const bookItem = `
-                            <div class="bg-yellow-100 p-4 rounded-lg shadow-sm flex items-center justify-between">
-                                <div class="flex items-center">
+                            <div class="bg-neutral-100 p-4 rounded-lg shadow-sm grid grid-cols-1 md:grid-cols-3 items-center gap-4">
+                                <div class="flex items-center col-span-1 md:col-span-2">
                                     <img src="${book.coverImageUrl || 'https://placehold.co/50x60/cccccc/333333?text=Cover'}" alt="${book.title}" class="w-12 h-16 object-cover rounded-md mr-4 shadow-sm">
                                     <div>
                                         <h4 class="text-lg font-semibold text-gray-800">${book.title}</h4>
@@ -874,8 +1151,8 @@
                                         <p class="text-gray-500 text-xs">${pdfDisplay}</p>
                                     </div>
                                 </div>
-                                <div class="flex space-x-2">
-                                    <button data-id="${bookId}" class="edit-book-btn bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded-lg text-sm shadow-md transition duration-300" data-lang-key="editButton">Edit</button>
+                                <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 justify-end">
+                                    <button data-id="${bookId}" class="edit-book-btn bg-stone-500 hover:bg-stone-600 text-white py-1 px-3 rounded-lg text-sm shadow-md transition duration-300" data-lang-key="editButton">Edit</button>
                                     <button data-id="${bookId}" class="delete-book-btn bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-lg text-sm shadow-md transition duration-300" data-lang-key="deleteButton">Delete</button>
                                 </div>
                             </div>
@@ -902,22 +1179,6 @@
 
 
         // --- Add/Edit Book Logic ---
-        const uploadBookForm = document.getElementById('uploadBookForm');
-        const bookTitleInput = document.getElementById('bookTitle');
-        const bookAuthorInput = document.getElementById('bookAuthor');
-        const bookDescriptionInput = document.getElementById('bookDescription');
-
-        const coverImageFileInput = document.getElementById('coverImageFile'); // File input for cover image
-        const coverImageFileNameDisplay = document.getElementById('coverImageFileNameDisplay'); // Display selected image filename
-        const uploadedCoverPreview = document.getElementById('uploadedCoverPreview'); // Image preview
-
-        const pdfFileInput = document.getElementById('pdfFile');
-        const pdfFileNameDisplay = document.getElementById('pdfFileNameDisplay');
-
-        const submitBookBtn = document.getElementById('submitBookBtn');
-        const cancelEditBtn = document.getElementById('cancelEditBtn');
-        const formTitle = document.getElementById('formTitle');
-
         let editingBookId = null; // Stores the ID of the book being edited
         let currentCoverImageFile = null; // Stores the actual File object for upload
         let currentPdfFile = null; // Stores the actual File object for upload
@@ -927,335 +1188,18 @@
         let currentPdfURL = ''; // Stores the Firebase Storage URL of the selected/existing PDF file
 
 
-        // Handle Cover Image file selection - now uploads to Firebase Storage
-        if (coverImageFileInput) {
-            coverImageFileInput.addEventListener('change', async (e) => {
-                if (!isLoggedIn) {
-                    showMessageModal("msgLoginRequiredForUpload"); // Use translation key
-                    coverImageFileInput.value = ''; // Clear selection
-                    return;
-                }
-                if (e.target.files.length > 0) {
-                    const file = e.target.files[0];
-                    currentCoverImageFile = file; // Store the actual file object
-                    currentCoverImageFileName = file.name;
-
-                    // Display a loading message
-                    if(uploadedCoverPreview) {
-                        uploadedCoverPreview.src = ''; // Clear preview
-                        uploadedCoverPreview.style.display = 'none';
-                    }
-                    if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = `${translations[currentLang]['msgUploading']} ${file.name}...`; // Use translation key
-
-                    // Upload to Firebase Storage
-                    // Use a unique path to avoid conflicts, e.g., include timestamp or user ID
-                    const imageStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/covers/${Date.now()}_${file.name}`);
-                    try {
-                        const snapshot = await uploadBytes(imageStorageRef, file);
-                        currentCoverImageURL = await getDownloadURL(snapshot.ref);
-                        if(uploadedCoverPreview) {
-                            uploadedCoverPreview.src = currentCoverImageURL;
-                            uploadedCoverPreview.style.display = 'block';
-                        }
-                        if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = `${translations[currentLang]['msgUploaded']}: ${currentCoverImageFileName}`; // Use translation key
-                        showMessageModal("msgCoverUploaded"); // Use translation key
-                    } catch (error) {
-                        console.error("Error uploading cover image to Firebase Storage:", error);
-                        showMessageModal(`${translations[currentLang]['msgFailedUploadCover']}: ${error.message}. ${translations[currentLang]['msgCheckStorageRulesOrNetwork']}`); // Use translation key
-                        currentCoverImageFile = null; // Reset file object
-                        currentCoverImageFileName = '';
-                        if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = translations[currentLang]['msgUploadFailed']; // Use translation key
-                        if(uploadedCoverPreview) {
-                            uploadedCoverPreview.style.display = 'none';
-                            uploadedCoverPreview.src = '';
-                        }
-                    }
-                } else {
-                    currentCoverImageFile = null;
-                    currentCoverImageFileName = '';
-                    if(coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = '';
-                    currentCoverImageURL = '';
-                    if(uploadedCoverPreview) {
-                        uploadedCoverPreview.src = '';
-                        uploadedCoverPreview.style.display = 'none';
-                    }
-                }
-            });
-        }
-        
-        // Handle PDF file selection - now uploads to Firebase Storage
-        if (pdfFileInput) {
-            pdfFileInput.addEventListener('change', async (e) => {
-                if (!isLoggedIn) {
-                    showMessageModal("msgLoginRequiredForUpload"); // Use translation key
-                    pdfFileInput.value = ''; // Clear selection
-                    return;
-                }
-                if (e.target.files.length > 0) {
-                    const file = e.target.files[0];
-                    currentPdfFile = file; // Store the actual file object
-                    currentPdfFileName = file.name;
-
-                    // Display a loading message
-                    if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = `${translations[currentLang]['msgUploading']} ${file.name}...`; // Use translation key
-
-                    // Upload to Firebase Storage
-                    const pdfStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/pdfs/${Date.now()}_${file.name}`); // Unique path
-                    try {
-                        const snapshot = await uploadBytes(pdfStorageRef, file);
-                        currentPdfURL = await getDownloadURL(snapshot.ref);
-                        if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = `${translations[currentLang]['msgUploaded']}: ${currentPdfFileName}`; // Use translation key
-                        showMessageModal("msgPdfUploaded"); // Use translation key
-                    } catch (error) {
-                        console.error("Error uploading PDF to Firebase Storage:", error);
-                        showMessageModal(`${translations[currentLang]['msgFailedUploadPdf']}: ${error.message}. ${translations[currentLang]['msgCheckStorageRulesOrNetwork']}`); // Use translation key
-                        currentPdfFile = null; // Reset file object
-                        currentPdfFileName = '';
-                        if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = translations[currentLang]['msgUploadFailed']; // Use translation key
-                        currentPdfURL = '';
-                    }
-                } else {
-                    currentPdfFile = null;
-                    currentPdfFileName = '';
-                    if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = '';
-                    currentPdfURL = '';
-                }
-            });
-        }
-
-
-        if (uploadBookForm) {
-            uploadBookForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                if (!isLoggedIn) {
-                    showMessageModal("msgLoginRequiredToAddEdit"); // Use translation key
-                    return;
-                }
-                if (!isAuthReady) {
-                     showMessageModal("msgFirebaseNotReady"); // Use translation key
-                     return;
-                }
-
-                const title = bookTitleInput.value.trim();
-                const author = bookAuthorInput.value.trim();
-                const description = bookDescriptionInput.value.trim();
-
-                let pdfUrlToSave = currentPdfURL;
-                let coverImageUrlToSave = currentCoverImageURL;
-                let pdfFileNameToSave = currentPdfFileName; // Use the filename from the upload process
-                let coverImageFileNameToSave = currentCoverImageFileName; // Use the filename from the upload process
-
-                // --- Validation & Retaining existing URLs/Filenames during edit ---
-                if (!title || !author) {
-                    showMessageModal("msgFillTitleAuthor");
-                    return;
-                }
-
-                if (editingBookId) { // If editing existing book
-                    // Fetch current book data if no new files were selected
-                    const bookSnap = await getDoc(doc(db, BOOKS_COLLECTION_PATH, editingBookId));
-                    const existingBook = bookSnap.exists() ? bookSnap.data() : null;
-
-                    if (!currentPdfFile) { // If no new PDF was uploaded, use existing
-                        pdfUrlToSave = existingBook?.pdfUrl || '';
-                        pdfFileNameToSave = existingBook?.pdfFileName || '';
-                    }
-                    if (!currentCoverImageFile) { // If no new cover was uploaded, use existing
-                        coverImageUrlToSave = existingBook?.coverImageUrl || '';
-                        coverImageFileNameToSave = existingBook?.coverImageFileName || '';
-                    }
-                } else { // For new books, ensure files are selected
-                    if (!currentPdfFile || !currentPdfURL) {
-                        showMessageModal("msgSelectPdfWaitUpload"); // Use translation key
-                        return;
-                    }
-                    if (!currentCoverImageFile || !currentCoverImageURL) {
-                        showMessageModal("msgSelectCoverWaitUpload"); // Use translation key
-                        return;
-                    }
-                }
-
-                // Final check that URLs are available after all logic
-                if (!pdfUrlToSave) {
-                     showMessageModal("msgPdfMissing"); // Use translation key
-                     return;
-                }
-                if (!coverImageUrlToSave) {
-                     showMessageModal("msgCoverMissing"); // Use translation key
-                     return;
-                }
-
-                // Show loading indicator / disable button
-                if (submitBookBtn) {
-                    submitBookBtn.textContent = editingBookId ? translations[currentLang]['msgUpdating'] : translations[currentLang]['msgAdding'];
-                    submitBookBtn.disabled = true;
-                }
-                
-                try {
-                    const bookData = {
-                        title: title,
-                        author: author,
-                        description: description,
-                        coverImageUrl: coverImageUrlToSave,
-                        coverImageFileName: coverImageFileNameToSave,
-                        pdfUrl: pdfUrlToSave,
-                        pdfFileName: pdfFileNameToSave,
-                        timestamp: new Date().toISOString()
-                    };
-
-                    if (editingBookId) {
-                        await updateDoc(doc(db, BOOKS_COLLECTION_PATH, editingBookId), bookData);
-                        showMessageModal("msgPublicationUpdated");
-                    } else {
-                        await addDoc(collection(db, BOOKS_COLLECTION_PATH), bookData);
-                        showMessageModal("msgPublicationAdded");
-                    }
-
-                    resetBookForm();
-                    // loadBooksForAdmin and loadBooks are already handled by onSnapshot listeners
-                } catch (error) {
-                    console.error("Error saving document: ", error);
-                    showMessageModal(`${translations[currentLang]['msgErrorSavingPublication']}: ${error.message}. ${translations[currentLang]['msgCheckFirestoreRules']}`); // Use translation key
-                } finally {
-                    if (submitBookBtn) {
-                        submitBookBtn.textContent = editingBookId ? translations[currentLang]['updatePublicationButton'] : translations[currentLang]['addPublicationButton'];
-                        submitBookBtn.disabled = false;
-                        setLanguage(currentLang); // Re-apply translation to button text
-                    }
-                }
-            });
-        }
-
-
-        // --- Edit Book Logic ---
-        async function editBook(bookId) {
-            if (!isAuthReady || !isLoggedIn) {
-                showMessageModal("msgLoginRequiredToEdit"); // Use translation key
-                return;
-            }
-
-            try {
-                const bookRef = doc(db, BOOKS_COLLECTION_PATH, bookId);
-                const bookSnap = await getDoc(bookRef);
-
-                if (bookSnap.exists()) {
-                    const bookData = bookSnap.data();
-                    editingBookId = bookId;
-
-                    // Populate the form with existing data
-                    if (bookTitleInput) bookTitleInput.value = bookData.title;
-                    if (bookAuthorInput) bookAuthorInput.value = bookData.author;
-                    if (bookDescriptionInput) bookDescriptionInput.value = bookData.description;
-
-                    // Set cover image preview and currentCoverImageURL
-                    if (uploadedCoverPreview) {
-                        uploadedCoverPreview.src = bookData.coverImageUrl || '';
-                        uploadedCoverPreview.style.display = bookData.coverImageUrl ? 'block' : 'none';
-                    }
-                    if (coverImageFileInput) coverImageFileInput.value = ''; // Important: Clear native file input value for new selection
-                    currentCoverImageURL = bookData.coverImageUrl || ''; // Store the existing URL
-                    currentCoverImageFileName = bookData.coverImageFileName || '';
-                    if (coverImageFileNameDisplay) coverImageFileNameDisplay.textContent = bookData.coverImageFileName ? `${translations[currentLang]['msgCurrentCover']}: ${bookData.coverImageFileName}` : translations[currentLang]['msgNoCoverSelected']; // Use translation key
-
-
-                    // Set PDF display and currentPdfURL
-                    if (pdfFileInput) pdfFileInput.value = ''; // Important: Clear native file input value for new selection
-                    currentPdfURL = bookData.pdfUrl || ''; // Store the existing URL
-                    currentPdfFileName = bookData.pdfFileName || '';
-                    if (pdfFileNameDisplay) pdfFileNameDisplay.textContent = bookData.pdfFileName ? `${translations[currentLang]['msgCurrentPdf']}: ${bookData.pdfFileName}` : translations[currentLang]['msgNoPdfSelected']; // Use translation key
-
-
-                    // Change form title and button text
-                    if (formTitle) formTitle.textContent = translations[currentLang]['editPublicationTitle']; // Use translation key
-                    if (submitBookBtn) submitBookBtn.textContent = translations[currentLang]['updatePublicationButton']; // Use translation key
-                    if (cancelEditBtn) cancelEditBtn.classList.remove('hidden'); // Show cancel button
-
-                    // Scroll to the form
-                    window.scrollTo({ top: uploadBookForm.offsetTop, behavior: 'smooth' });
-                } else {
-                    showMessageModal("msgBookNotFound"); // Use translation key
-                }
-            } catch (error) {
-                console.error("Error fetching book for edit:", error);
-                showMessageModal("msgErrorLoadingBook"); // Use translation key
-            }
-        }
-
-        // --- Cancel Edit Logic ---
-        if (cancelEditBtn) {
-            cancelEditBtn.addEventListener('click', () => {
-                resetBookForm(); // Uses translations
-                showMessageModal("msgEditCancelled"); // Use translation key
-            });
-        }
-
-        // --- Delete Book Logic ---
-        async function deleteBook(bookId) {
-            if (!isLoggedIn) {
-                showMessageModal("msgLoginRequiredToDelete"); // Use translation key
-                return;
-            }
-            if (!isAuthReady) {
-                 showMessageModal("msgFirebaseNotReady"); // Use translation key
-                 return;
-            }
-
-            showConfirmModal("msgConfirmDelete", async (confirmed) => { // Use translation key
-                if (confirmed) {
-                    try {
-                        const bookRef = doc(db, BOOKS_COLLECTION_PATH, bookId);
-                        const bookSnap = await getDoc(bookRef);
-                        const bookData = bookSnap.exists() ? bookSnap.data() : null;
-
-                        // Attempt to delete files from Firebase Storage first if URLs are valid
-                        if (bookData && bookData.pdfUrl && !bookData.pdfUrl.includes('placehold.co')) {
-                            try {
-                                const pdfStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/pdfs/${bookData.pdfFileName}`);
-                                await deleteObject(pdfStorageRef);
-                                console.log("PDF deleted from Storage:", bookData.pdfFileName);
-                            } catch (storageError) {
-                                console.warn("Could not delete PDF from Storage (might not exist or permission issue):", storageError);
-                            }
-                        }
-                        if (bookData && bookData.coverImageUrl && !bookData.coverImageUrl.includes('placehold.co')) {
-                            try {
-                                const coverStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/covers/${bookData.coverImageFileName}`);
-                                await deleteObject(coverStorageRef);
-                                console.log("Cover image deleted from Storage:", bookData.coverImageFileName);
-                            } catch (storageError) {
-                                console.warn("Could not delete cover image from Storage (might not exist or permission issue):", storageError);
-                            }
-                        }
-
-                        // Finally, delete the document from Firestore
-                        await deleteDoc(bookRef);
-                        showMessageModal("msgPublicationDeleted"); // Use translation key
-                        // onSnapshot listeners will automatically update loadBooksForAdmin and loadBooks
-                    } catch (error) {
-                        console.error("Error removing document: ", error);
-                        showMessageModal(`${translations[currentLang]['msgErrorDeletingPublication']}: ${error.message}.`); // Use translation key
-                    }
-                }
-            });
-        }
-
         // Helper to extract file name from URL (for display/deletion) - adjusted for new storage path
         function getFileNameFromUrl(url) {
-            // Extracts the filename from a full Firebase Storage download URL
             try {
-                // Example URL: https://firebasestorage.googleapis.com/v0/b/YOUR_BUCKET/o/path%2Fto%2Ffile.jpg?alt=media...
                 const urlObj = new URL(url);
                 const pathParts = decodeURIComponent(urlObj.pathname).split('/');
-                // The filename should be the last part after "o/"
-                // Adjusted to handle the new path structure more reliably
-                const filenameWithTimestamp = pathParts[pathParts.length - 1]; // e.g., 1678888888888_myimage.jpg
-                // To get just the original filename, you might need to remove the timestamp prefix if present
+                const filenameWithTimestamp = pathParts[pathParts.length - 1];
                 const parts = filenameWithTimestamp.split('_');
-                if (parts.length > 1 && !isNaN(Number(parts[0]))) { // Check if first part is a number (timestamp)
-                    parts.shift(); // Remove the timestamp
-                    return parts.join('_'); // Rejoin the rest
+                if (parts.length > 1 && !isNaN(Number(parts[0]))) {
+                    parts.shift();
+                    return parts.join('_');
                 }
-                return filenameWithTimestamp; // Return as is if no timestamp prefix
+                return filenameWithTimestamp;
             } catch (e) {
                 console.warn("Error extracting filename from URL:", url, e);
                 return "Unknown File";
@@ -1290,58 +1234,12 @@
 
         // Call initialization on window load
         window.onload = function () {
-            initializeApp(firebaseConfig); // Initialize Firebase app once again here for this code version.
-            auth.onAuthStateChanged(user => { // Listener for authentication state changes
-                if (user) {
-                    userId = user.uid;
-                    isLoggedIn = true;
-                    console.log("User logged in:", userId);
-                } else {
-                    userId = null;
-                    isLoggedIn = false;
-                    console.log("No user logged in.");
-                }
-                isAuthReady = true; // Mark auth state as ready
-                
-                // Now that auth is ready, set up event listeners and initial view
-                const currentUserIdElement = document.getElementById('currentUserId');
-                if (currentUserIdElement) {
-                    currentUserIdElement.textContent = userId || translations[currentLang]['footerUserId'] + ' ' + translations[currentLang]['msgNotAvailable'];
-                }
-                
-                // Only show initial view once auth state is confirmed
-                showView('homeView');
-            });
-
+            initializeFirebase(); // ONLY call initializeFirebase here
             const currentYearElement = document.getElementById('currentYear');
             if (currentYearElement) {
                 currentYearElement.textContent = new Date().getFullYear();
             }
-            setLanguage(currentLang); // Ensure initial load translates content
-
-            // Modals backdrop click (ensure these are set up after modals exist)
-            const messageModal = document.getElementById('messageModal');
-            if (messageModal) {
-                messageModal.addEventListener('click', function(event) {
-                    if (event.target === messageModal) {
-                        closeMessageModal();
-                    }
-                });
-            }
-            
-            const confirmModal = document.getElementById('confirmModal');
-            if (confirmModal) {
-                confirmModal.addEventListener('click', function(event) {
-                    if (event.target === confirmModal) {
-                        confirmModal.classList.remove('flex');
-                        confirmModal.classList.add('hidden');
-                        if (confirmCallback) {
-                            confirmCallback(false);
-                            confirmCallback = null;
-                        }
-                    }
-                });
-            }
+            // setupEventListeners will now be called by onAuthStateChanged after Firebase init.
         };
     </script>
 </body>
