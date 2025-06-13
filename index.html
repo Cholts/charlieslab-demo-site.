@@ -19,7 +19,7 @@
             margin: 0 auto;
             padding: 2rem;
         }
-        /* Custom modal styles for alerts */
+        /* Custom modal styles for alerts and book details */
         .modal {
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
@@ -32,6 +32,7 @@
             background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
             justify-content: center; /* Center horizontally */
             align-items: center; /* Center vertically */
+            padding: 1rem; /* Add some padding for smaller screens */
         }
         .modal.flex {
             display: flex; /* Override display: none when showing */
@@ -42,9 +43,10 @@
             padding: 20px;
             border-radius: 0.75rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            max-width: 500px; /* Increased max-width for book details */
             width: 90%;
             text-align: center;
+            position: relative; /* For positioning close button */
         }
         .close-button {
             color: #aaa;
@@ -52,11 +54,18 @@
             font-size: 28px;
             font-weight: bold;
             line-height: 1; /* Adjust line-height to center X vertically */
+            position: absolute;
+            top: 10px;
+            right: 20px;
         }
         .close-button:hover,
         .close-button:focus {
             color: black;
             text-decoration: none;
+            cursor: pointer;
+        }
+        /* Style for book card to allow full description on click */
+        .book-card {
             cursor: pointer;
         }
     </style>
@@ -65,19 +74,19 @@
 
     <!-- Header -->
     <header class="bg-stone-800 shadow-md py-4 px-6 md:px-8">
-        <div class="container flex justify-between items-center gap-x-12">
-            <h1 class="text-2xl md:text-3xl font-bold text-neutral-100" data-lang-key="headerTitle">Quaderni di Archeologia della Libya</h1>
-            <nav class="flex items-center space-x-4">
-                <button id="homeViewBtn" class="bg-stone-600 hover:bg-stone-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="homeBtn">Publications</button>
-                <button id="aboutViewBtn" class="bg-stone-600 hover:bg-stone-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="aboutBtn">About Us</button>
-                <button id="contactViewBtn" class="bg-stone-600 hover:bg-stone-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="contactBtn">Contact Us</button>
+        <div class="container flex flex-col md:flex-row justify-between items-center gap-y-4 md:gap-y-0 md:gap-x-12">
+            <h1 class="text-2xl md:text-3xl font-bold text-neutral-100 text-center md:text-left" data-lang-key="headerTitle">Quaderni di Archeologia della Libya</h1>
+            <nav class="flex flex-wrap justify-center md:justify-end items-center space-x-2 md:space-x-4">
+                <button id="homeViewBtn" class="bg-stone-600 hover:bg-stone-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105" data-lang-key="homeBtn">Publications</button>
+                <button id="aboutViewBtn" class="bg-stone-600 hover:bg-stone-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105" data-lang-key="aboutBtn">About Us</button>
+                <button id="contactViewBtn" class="bg-stone-600 hover:bg-stone-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105" data-lang-key="contactBtn">Contact Us</button>
                 <!-- Admin login button made less pronounced -->
-                <button id="adminLoginBtn" class="text-neutral-300 hover:text-neutral-100 font-semibold py-2 px-2 rounded-lg transition duration-300 text-sm" data-lang-key="adminLoginBtn">Admin Login</button>
+                <button id="adminLoginBtn" class="text-neutral-300 hover:text-neutral-100 font-semibold py-2 px-2 rounded-lg transition duration-300 text-sm transform hover:scale-105" data-lang-key="adminLoginBtn">Admin Login</button>
                 
                 <!-- Language Toggle -->
                 <div class="ml-4 flex space-x-2">
-                    <button id="langEnBtn" class="text-neutral-300 hover:text-neutral-100 font-semibold py-1 px-2 rounded-lg text-sm bg-stone-700 transition duration-300">EN</button>
-                    <button id="langItBtn" class="text-neutral-300 hover:text-neutral-100 font-semibold py-1 px-2 rounded-lg text-sm bg-stone-700 transition duration-300">IT</button>
+                    <button id="langEnBtn" class="text-neutral-300 hover:text-neutral-100 font-semibold py-1 px-2 rounded-lg text-sm bg-stone-700 transition duration-300 transform hover:scale-110">EN</button>
+                    <button id="langItBtn" class="text-neutral-300 hover:text-neutral-100 font-semibold py-1 px-2 rounded-lg text-sm bg-stone-700 transition duration-300 transform hover:scale-110">IT</button>
                 </div>
             </nav>
         </div>
@@ -91,7 +100,7 @@
             <div class="modal-content">
                 <span class="close-button text-gray-600 hover:text-gray-900 cursor-pointer text-xl mb-4" onclick="closeMessageModal()">&times;</span>
                 <p id="modalMessage" class="text-lg text-gray-800"></p>
-                <button onclick="closeMessageModal()" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="modalOkBtn">OK</button>
+                <button onclick="closeMessageModal()" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105" data-lang-key="modalOkBtn">OK</button>
             </div>
         </div>
 
@@ -100,9 +109,21 @@
             <div class="modal-content">
                 <p id="confirmMessage" class="text-lg text-gray-800 mb-6"></p>
                 <div class="flex justify-center space-x-4">
-                    <button id="confirmYesBtn" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="confirmYesBtn">Yes</button>
-                    <button id="confirmNoBtn" class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="confirmNoBtn">No</button>
+                    <button id="confirmYesBtn" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105" data-lang-key="confirmYesBtn">Yes</button>
+                    <button id="confirmNoBtn" class="bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105" data-lang-key="confirmNoBtn">No</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Book Details Modal -->
+        <div id="bookDetailsModal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-button text-gray-600 hover:text-gray-900 cursor-pointer text-xl" onclick="closeBookDetailsModal()">&times;</span>
+                <img id="modalBookCover" src="" alt="Book Cover" class="w-48 h-64 object-cover rounded-md mx-auto mb-4 shadow-lg">
+                <h3 id="modalBookTitle" class="text-2xl font-bold mb-2 text-gray-800"></h3>
+                <p id="modalBookAuthor" class="text-gray-600 text-base mb-3"></p>
+                <p id="modalBookDescription" class="text-gray-700 text-sm text-left leading-relaxed mb-6"></p>
+                <a id="modalDownloadPdfBtn" href="#" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105" data-lang-key="downloadPdfButton">Download PDF</a>
             </div>
         </div>
 
@@ -158,7 +179,7 @@
                     <label for="password" class="block text-gray-700 text-sm font-semibold mb-2" data-lang-key="passwordLabel">Password:</label>
                     <input type="password" id="password" name="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
-                <button type="submit" class="w-full bg-stone-600 hover:bg-stone-700 text-white font-semibold py-3 rounded-lg shadow-md transition duration-300" data-lang-key="loginButton">Login</button>
+                <button type="submit" class="w-full bg-stone-600 hover:bg-stone-700 text-white font-semibold py-3 rounded-lg shadow-md transition duration-300 transform hover:scale-105" data-lang-key="loginButton">Login</button>
             </form>
             <p class="text-center text-sm text-gray-500 mt-4" data-lang-key="firebaseAuthHint">Use your Firebase Auth admin email and password.</p>
             <p class="text-sm text-red-500 mt-2 text-center" id="loginErrorMessage"></p>
@@ -166,13 +187,13 @@
 
         <!-- Admin Dashboard Section -->
         <section id="adminDashboardView" class="hidden bg-neutral-50 p-8 rounded-xl shadow-lg">
-            <div class="flex justify-between items-center mb-6">
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
                 <h2 class="text-3xl font-bold text-gray-800" data-lang-key="adminDashboardTitle">Admin Dashboard</h2>
-                <button id="adminLogoutBtn" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300" data-lang-key="logoutButton">Logout</button>
+                <button id="adminLogoutBtn" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105" data-lang-key="logoutButton">Logout</button>
             </div>
 
             <!-- Upload/Edit New Book Form -->
-            <div class="mb-8 p-6 border border-gray-200 rounded-lg shadow-sm">
+            <div class="mb-8 p-6 border border-gray-200 rounded-xl shadow-sm">
                 <h3 id="formTitle" class="text-2xl font-bold mb-4 text-gray-800" data-lang-key="uploadNewPublicationTitle">Upload New Publication</h3>
                 <form id="uploadBookForm" class="space-y-4">
                     <div>
@@ -198,15 +219,15 @@
                         <input type="file" id="pdfFile" accept=".pdf" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <p id="pdfFileNameDisplay" class="text-sm text-gray-600 mt-1"></p>
                     </div>
-                    <div class="flex space-x-4">
-                        <button type="submit" id="submitBookBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow-md transition duration-300" data-lang-key="addPublicationButton">Add Publication</button>
-                        <button type="button" id="cancelEditBtn" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 rounded-lg shadow-md transition duration-300 hidden" data-lang-key="cancelEditButton">Cancel Edit</button>
+                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                        <button type="submit" id="submitBookBtn" class="w-full sm:w-1/2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow-md transition duration-300 transform hover:scale-105" data-lang-key="addPublicationButton">Add Publication</button>
+                        <button type="button" id="cancelEditBtn" class="w-full sm:w-1/2 bg-gray-400 hover:bg-gray-500 text-white font-semibold py-3 rounded-lg shadow-md transition duration-300 transform hover:scale-105 hidden" data-lang-key="cancelEditButton">Cancel Edit</button>
                     </div>
                 </form>
             </div>
 
             <!-- Existing Publications List -->
-            <div class="p-6 border border-gray-200 rounded-lg shadow-sm">
+            <div class="p-6 border border-gray-200 rounded-xl shadow-sm">
                 <h3 class="text-2xl font-bold mb-4 text-gray-800" data-lang-key="existingPublicationsTitle">Existing Publications</h3>
                 <div id="adminBooksList" class="space-y-4">
                     <!-- Books will be loaded here for admin by JavaScript -->
@@ -521,20 +542,24 @@
 
 
             if (currentCoverImageFile) {
-                if (coverImageFileNameDisplayLocal) coverImageFileNameDisplayLocal.textContent = `${translations[currentLang]['msgSelected']}: ${currentCoverImageFile.name}`;
-            } else if (editingBookId && uploadedCoverPreviewLocal && uploadedCoverPreviewLocal.src) {
-                if (coverImageFileNameDisplayLocal) coverImageFileNameDisplayLocal.textContent = `${translations[currentLang]['msgCurrentCover']}: ${getFileNameFromUrl(uploadedCoverPreviewLocal.src, true)}`; // Pass true to get full filename for display
+                if (coverImageFileNameDisplayLocal) coverImageFileNameDisplayLocal.textContent = `${translations[currentLang]['msgSelected']}: ${getOriginalFileNameFromUnique(currentCoverImageFile.name)}`;
+            } else if (editingBookId && currentCoverImageFileName) { // Changed to use currentCoverImageFileName
+                if (coverImageFileNameDisplayLocal) coverImageFileNameDisplayLocal.textContent = `${translations[currentLang]['msgCurrentCover']}: ${getOriginalFileNameFromUnique(currentCoverImageFileName)}`;
             } else {
                 if (coverImageFileNameDisplayLocal) coverImageFileNameDisplayLocal.textContent = '';
             }
 
             if (currentPdfFile) {
-                if (pdfFileNameDisplayLocal) pdfFileNameDisplayLocal.textContent = `${translations[currentLang]['msgSelected']}: ${currentPdfFile.name}`;
-            } else if (editingBookId && currentPdfURL) {
-                if (pdfFileNameDisplayLocal) pdfFileNameDisplayLocal.textContent = `${translations[currentLang]['msgCurrentPdf']}: ${getFileNameFromUrl(currentPdfURL, true)}`; // Pass true
+                if (pdfFileNameDisplayLocal) pdfFileNameDisplayLocal.textContent = `${translations[currentLang]['msgSelected']}: ${getOriginalFileNameFromUnique(currentPdfFile.name)}`;
+            } else if (editingBookId && currentPdfFileName) { // Changed to use currentPdfFileName
+                if (pdfFileNameDisplayLocal) pdfFileNameDisplayLocal.textContent = `${translations[currentLang]['msgCurrentPdf']}: ${getOriginalFileNameFromUnique(currentPdfFileName)}`;
             } else {
                 if (pdfFileNameDisplayLocal) pdfFileNameDisplayLocal.textContent = '';
             }
+
+            // Update dynamically generated text in file input displays
+            // This function needs to be called after updating the relevant variables (currentCoverImageFile, currentPdfFile, editingBookId, currentCoverImageFileName, currentPdfFileName, currentPdfURL)
+            // The logic in `setLanguage` to update these displays is correct provided these variables hold the correct state.
 
             // Update potentially dynamic content like "by Author"
             document.querySelectorAll('.book-card-author').forEach(el => {
@@ -631,6 +656,55 @@
                 confirmCallback = null;
             }
         });
+
+        // Book Details Modal Functions
+        function showBookDetailsModal(book) {
+            const modalBookCover = document.getElementById('modalBookCover');
+            const modalBookTitle = document.getElementById('modalBookTitle');
+            const modalBookAuthor = document.getElementById('modalBookAuthor');
+            const modalBookDescription = document.getElementById('modalBookDescription');
+            const modalDownloadPdfBtn = document.getElementById('modalDownloadPdfBtn');
+            const bookDetailsModal = document.getElementById('bookDetailsModal');
+
+            if (modalBookCover) modalBookCover.src = book.coverImageUrl || 'https://placehold.co/150x200/cccccc/333333?text=No+Cover';
+            if (modalBookTitle) modalBookTitle.textContent = book.title;
+            if (modalBookAuthor) modalBookAuthor.textContent = `${translations[currentLang]['byAuthor']} ${book.author}`;
+            if (modalBookDescription) modalBookDescription.textContent = book.description || translations[currentLang]['msgNoDescriptionProvided'];
+            
+            if (modalDownloadPdfBtn) {
+                if (book.pdfUrl) {
+                    modalDownloadPdfBtn.href = book.pdfUrl;
+                    modalDownloadPdfBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    modalDownloadPdfBtn.onclick = null; // Remove previous onclick
+                } else {
+                    modalDownloadPdfBtn.href = '#';
+                    modalDownloadPdfBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                    modalDownloadPdfBtn.onclick = (e) => {
+                        e.preventDefault();
+                        showMessageModal('msgPdfNotAvailable');
+                    };
+                }
+            }
+
+            if (bookDetailsModal) {
+                bookDetailsModal.classList.remove('hidden');
+                bookDetailsModal.classList.add('flex');
+            }
+            // Add event listener to close button inside the modal
+            const closeBtn = bookDetailsModal.querySelector('.close-button');
+            if (closeBtn) {
+                closeBtn.onclick = closeBookDetailsModal;
+            }
+        }
+
+        function closeBookDetailsModal() {
+            const bookDetailsModal = document.getElementById('bookDetailsModal');
+            if (bookDetailsModal) {
+                bookDetailsModal.classList.remove('flex');
+                bookDetailsModal.classList.add('hidden');
+            }
+        }
+
 
         // Firebase Initialization and Authentication state management
         async function initializeFirebase() {
@@ -1044,6 +1118,15 @@
                     }
                 });
             }
+
+            const bookDetailsModal = document.getElementById('bookDetailsModal');
+            if (bookDetailsModal) {
+                bookDetailsModal.addEventListener('click', function(event) {
+                    if (event.target === bookDetailsModal) {
+                        closeBookDetailsModal();
+                    }
+                });
+            }
         } // End of setupEventListeners
 
         // --- Book Management (Firestore) ---
@@ -1093,15 +1176,18 @@
                     noBooksMessage.classList.add('hidden');
 
                     filteredBooks.forEach((book) => {
+                        // Truncate description for card view
+                        const truncatedDescription = book.description && book.description.length > 100 
+                            ? book.description.substring(0, 97) + '...' 
+                            : (book.description || translations[currentLang]['msgNoDescriptionProvided']);
+
                         const bookCard = `
-                            <div class="bg-neutral-100 p-4 rounded-lg shadow-md flex flex-col items-center text-center transition duration-300 hover:shadow-lg">
+                            <div class="bg-neutral-100 p-4 rounded-lg shadow-md flex flex-col items-center text-center transition duration-300 hover:shadow-lg book-card" data-book-id="${book.id}">
                                 <img src="${book.coverImageUrl || 'https://placehold.co/150x200/cccccc/333333?text=No+Cover'}" alt="${book.title}" class="w-36 h-48 object-cover rounded-md mb-4 shadow-sm">
                                 <h3 class="text-xl font-semibold mb-2 text-gray-800">${book.title}</h3>
                                 <p class="text-gray-600 text-sm mb-3">${translations[currentLang]['byAuthor']} ${book.author}</p>
-                                <p class="text-gray-700 text-sm overflow-hidden text-ellipsis h-12 mb-4">${book.description || (translations[currentLang]['msgNoDescriptionProvided'])}</p>
-                                <a href="${book.pdfUrl || '#'}" target="_blank" class="mt-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ${!book.pdfUrl ? 'opacity-50 cursor-not-allowed' : ''}" ${!book.pdfUrl ? `onclick="event.preventDefault(); showMessageModal('msgPdfNotAvailable');"` : ''}>
-                                    ${translations[currentLang]['downloadPdfButton']}
-                                </a>
+                                <p class="text-gray-700 text-sm h-12 overflow-hidden">${truncatedDescription}</p>
+                                <button class="mt-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105 mt-4" onclick="showBookDetailsModalWithId('${book.id}')" data-lang-key="viewDetailsButton">View Details</button>
                             </div>
                         `;
                         booksContainer.innerHTML += bookCard;
@@ -1146,8 +1232,8 @@
                         const book = docRef.data();
                         const bookId = docRef.id;
                         // Display original filename for better readability in Admin UI
-                        const pdfDisplayFileName = getFileNameFromUrl(book.pdfUrl, false) || translations[currentLang]['msgNotAvailable'];
-                        const coverDisplayFileName = getFileNameFromUrl(book.coverImageUrl, false) || translations[currentLang]['msgNotAvailable'];
+                        const pdfDisplayFileName = getOriginalFileNameFromUnique(book.pdfFileName) || translations[currentLang]['msgNotAvailable'];
+                        const coverDisplayFileName = getOriginalFileNameFromUnique(book.coverImageFileName) || translations[currentLang]['msgNotAvailable'];
 
                         const bookItem = `
                             <div class="bg-neutral-100 p-4 rounded-lg shadow-sm grid grid-cols-1 md:grid-cols-3 items-center gap-4">
@@ -1161,8 +1247,8 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 justify-end">
-                                    <button data-id="${bookId}" class="edit-book-btn bg-stone-500 hover:bg-stone-600 text-white py-1 px-3 rounded-lg text-sm shadow-md transition duration-300" data-lang-key="editButton">Edit</button>
-                                    <button data-id="${bookId}" class="delete-book-btn bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-lg text-sm shadow-md transition duration-300" data-lang-key="deleteButton">Delete</button>
+                                    <button data-id="${bookId}" class="edit-book-btn bg-stone-500 hover:bg-stone-600 text-white py-1 px-3 rounded-lg text-sm shadow-md transition duration-300 transform hover:scale-105" data-lang-key="editButton">Edit</button>
+                                    <button data-id="${bookId}" class="delete-book-btn bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-lg text-sm shadow-md transition duration-300 transform hover:scale-105" data-lang-key="deleteButton">Delete</button>
                                 </div>
                             </div>
                         `;
@@ -1197,31 +1283,17 @@
         let currentPdfURL = ''; // Stores the Firebase Storage URL of the selected/existing PDF file
 
 
-        // Helper to extract file name from URL (for display/deletion) - adjusted for new storage path
-        // fullFileName = true will return the unique timestamped filename, false will return original
-        function getFileNameFromUrl(url, fullFileName = false) {
-            if (!url) return '';
-            try {
-                const urlObj = new URL(url);
-                const pathParts = decodeURIComponent(urlObj.pathname).split('/');
-                const uniqueFileName = pathParts[pathParts.length - 1]; // e.g., 1678888888888_myimage.jpg
-                
-                if (fullFileName) {
-                    return uniqueFileName;
-                }
-
-                // To get just the original filename, remove the timestamp prefix if present
-                const parts = uniqueFileName.split('_');
-                if (parts.length > 1 && !isNaN(Number(parts[0]))) { // Check if first part is a number (timestamp)
-                    parts.shift(); // Remove the timestamp
-                    return parts.join('_'); // Rejoin the rest
-                }
-                return uniqueFileName; // Return as is if no timestamp prefix or already original
-            } catch (e) {
-                console.warn("Error extracting filename from URL:", url, e);
-                return "Unknown File";
+        // Helper to extract original file name from unique timestamped name (for display)
+        function getOriginalFileNameFromUnique(uniqueFileName) {
+            if (!uniqueFileName) return '';
+            const parts = uniqueFileName.split('_');
+            if (parts.length > 1 && !isNaN(Number(parts[0]))) { // Check if first part is a number (timestamp)
+                parts.shift(); // Remove the timestamp
+                return parts.join('_'); // Rejoin the rest
             }
+            return uniqueFileName; // Return as is if no timestamp prefix
         }
+
 
         // --- Form Reset ---
         function resetBookForm() {
@@ -1249,14 +1321,136 @@
             currentPdfURL = '';
         }
 
-        // Call initialization on window load
-        window.onload = function () {
-            initializeFirebase(); // ONLY call initializeFirebase here
-            const currentYearElement = document.getElementById('currentYear');
-            if (currentYearElement) {
-                currentYearElement.textContent = new Date().getFullYear();
+        // Function to show book details in a modal given book ID
+        window.showBookDetailsModalWithId = async function(bookId) {
+            if (!isAuthReady) {
+                showMessageModal("msgFirebaseNotReady");
+                return;
             }
-            // setupEventListeners will now be called by onAuthStateChanged after Firebase init.
+            try {
+                const bookRef = doc(db, BOOKS_COLLECTION_PATH, bookId);
+                const bookSnap = await getDoc(bookRef);
+
+                if (bookSnap.exists()) {
+                    showBookDetailsModal(bookSnap.data());
+                } else {
+                    showMessageModal("msgBookNotFound");
+                }
+            } catch (error) {
+                console.error("Error fetching book for details:", error);
+                showMessageModal("msgErrorLoadingBook");
+            }
+        };
+
+        // --- Edit Book Logic ---
+        async function editBook(bookId) {
+            if (!isAuthReady || !isLoggedIn) {
+                showMessageModal("msgLoginRequiredToEdit");
+                return;
+            }
+
+            try {
+                const bookRef = doc(db, BOOKS_COLLECTION_PATH, bookId);
+                const bookSnap = await getDoc(bookRef);
+
+                if (bookSnap.exists()) {
+                    const bookData = bookSnap.data();
+                    editingBookId = bookId;
+
+                    // Populate the form with existing data
+                    bookTitleInput.value = bookData.title;
+                    bookAuthorInput.value = bookData.author;
+                    bookDescriptionInput.value = bookData.description;
+
+                    // Set cover image preview and currentCoverImageURL
+                    uploadedCoverPreview.src = bookData.coverImageUrl || '';
+                    uploadedCoverPreview.style.display = bookData.coverImageUrl ? 'block' : 'none';
+                    coverImageFileInput.value = ''; // Important: Clear native file input value
+                    currentCoverImageURL = bookData.coverImageUrl || ''; // Store the existing URL
+                    currentCoverImageFileName = bookData.coverImageFileName || ''; // Store the unique filename from Firestore
+                    coverImageFileNameDisplay.textContent = currentCoverImageFileName ? `${translations[currentLang]['msgCurrentCover']}: ${getOriginalFileNameFromUnique(currentCoverImageFileName)}` : translations[currentLang]['msgNoCoverSelected'];
+
+                    // Set PDF display and currentPdfURL
+                    pdfFileInput.value = ''; // Important: Clear native file input value
+                    currentPdfURL = bookData.pdfUrl || ''; // Store the existing URL
+                    currentPdfFileName = bookData.pdfFileName || ''; // Store the unique filename from Firestore
+                    pdfFileNameDisplay.textContent = currentPdfFileName ? `${translations[currentLang]['msgCurrentPdf']}: ${getOriginalFileNameFromUnique(currentPdfFileName)}` : translations[currentLang]['msgNoPdfSelected'];
+
+
+                    // Change form title and button text
+                    formTitle.textContent = translations[currentLang]['editPublicationTitle'];
+                    submitBookBtn.textContent = translations[currentLang]['updatePublicationButton'];
+                    cancelEditBtn.classList.remove('hidden'); // Show cancel button
+
+                    // Scroll to the form
+                    window.scrollTo({ top: uploadBookForm.offsetTop, behavior: 'smooth' });
+                } else {
+                    showMessageModal("msgBookNotFound");
+                }
+            } catch (error) {
+                console.error("Error fetching book for edit:", error);
+                showMessageModal("msgErrorLoadingBook");
+            }
+        }
+
+
+        // --- Delete Book Logic ---
+        async function deleteBook(bookId) {
+            if (!isLoggedIn) {
+                showMessageModal("msgLoginRequiredToDelete");
+                return;
+            }
+            if (!isAuthReady) {
+                 showMessageModal("msgFirebaseNotReady");
+                 return;
+            }
+
+            showConfirmModal("msgConfirmDelete", async (confirmed) => {
+                if (confirmed) {
+                    try {
+                        const bookRef = doc(db, BOOKS_COLLECTION_PATH, bookId);
+                        const bookSnap = await getDoc(bookRef);
+                        const bookData = bookSnap.data();
+
+                        // Attempt to delete files from Firebase Storage first
+                        // Use the stored unique filenames to construct storage references
+                        if (bookData.pdfFileName) {
+                            try {
+                                const pdfStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/pdfs/${bookData.pdfFileName}`);
+                                await deleteObject(pdfStorageRef);
+                                console.log("PDF deleted from Storage:", bookData.pdfFileName);
+                            } catch (storageError) {
+                                console.warn("Could not delete PDF from Storage (might not exist or permission issue):", bookData.pdfFileName, storageError);
+                                showMessageModal(`Error deleting PDF: ${storageError.message}.`);
+                            }
+                        }
+                        if (bookData.coverImageFileName) {
+                            try {
+                                const coverStorageRef = ref(storage, `artifacts/${firebaseConfig.projectId}/public/files/covers/${bookData.coverImageFileName}`);
+                                await deleteObject(coverStorageRef);
+                                console.log("Cover image deleted from Storage:", bookData.coverImageFileName);
+                            } catch (storageError) {
+                                console.warn("Could not delete cover image from Storage (might not exist or permission issue):", bookData.coverImageFileName, storageError);
+                                showMessageModal(`Error deleting cover image: ${storageError.message}.`);
+                            }
+                        }
+
+                        // Finally, delete the document from Firestore
+                        await deleteDoc(bookRef);
+                        showMessageModal("msgPublicationDeleted");
+                        // onSnapshot listeners will automatically update loadBooksForAdmin and loadBooks
+                    } catch (error) {
+                        console.error("Error removing document: ", error);
+                        showMessageModal("msgErrorDeletingPublication");
+                    }
+                }
+            });
+        }
+
+        // Initialize Firebase when the window loads
+        window.onload = function() {
+            initializeFirebase();
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
         };
     </script>
 </body>
