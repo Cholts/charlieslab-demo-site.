@@ -108,12 +108,7 @@
 
         <!-- Home View Section -->
         <section id="homeView" class="hidden bg-yellow-50 p-6 rounded-xl shadow-lg">
-            <!-- Hero Section -->
-            <div class="text-center mb-10 py-12 bg-red-100 rounded-xl shadow-md">
-                <h2 class="text-4xl md:text-5xl font-bold text-red-800 mb-4" data-lang-key="heroTitle">Discover Our Latest Publications</h2>
-                <p class="text-lg md:text-xl text-gray-700 mb-6" data-lang-key="heroSubtitle">Explore a world of knowledge and creativity.</p>
-                <button id="exploreBooksBtn" class="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105" data-lang-key="exploreBooksBtn">Explore Publications</button>
-            </div>
+            <!-- The "Discover Our Latest Publications" hero section has been removed as requested. -->
 
             <h2 class="text-3xl font-bold mb-6 text-center text-gray-800" data-lang-key="ourPublicationsTitle">Our Publications</h2>
             <div class="mb-6">
@@ -273,9 +268,9 @@
                 aboutBtn: "About Us",
                 contactBtn: "Contact Us",
                 adminLoginBtn: "Admin Login",
-                heroTitle: "Discover Our Latest Publications",
-                heroSubtitle: "Explore a world of knowledge and creativity.",
-                exploreBooksBtn: "Explore Publications",
+                heroTitle: "Discover Our Latest Publications", // This title is effectively removed by HTML edit
+                heroSubtitle: "Explore a world of knowledge and creativity.", // This subtitle is effectively removed by HTML edit
+                exploreBooksBtn: "Explore Publications", // This button is effectively removed by HTML edit
                 ourPublicationsTitle: "Our Publications",
                 searchPublicationsLabel: "Search Publications",
                 searchPlaceholder: "Search by title or author...",
@@ -380,9 +375,9 @@
                 aboutBtn: "Chi Siamo",
                 contactBtn: "Contattaci",
                 adminLoginBtn: "Accesso Admin",
-                heroTitle: "Scopri le Nostre Ultime Pubblicazioni",
-                heroSubtitle: "Esplora un mondo di conoscenza e creatività.",
-                exploreBooksBtn: "Esplora Pubblicazioni",
+                heroTitle: "Scopri le Nostre Ultime Pubblicazioni", // This title is effectively removed by HTML edit
+                heroSubtitle: "Esplora un mondo di conoscenza e creatività.", // This subtitle is effectively removed by HTML edit
+                exploreBooksBtn: "Esplora Pubblicazioni", // This button is effectively removed by HTML edit
                 ourPublicationsTitle: "Le Nostre Pubblicazioni",
                 searchPublicationsLabel: "Cerca Pubblicazioni",
                 searchPlaceholder: "Cerca per titolo o autore...",
@@ -658,7 +653,7 @@
         const contactViewBtn = document.getElementById('contactViewBtn');
         const adminLoginBtn = document.getElementById('adminLoginBtn');
         const adminLogoutBtn = document.getElementById('adminLogoutBtn');
-        const exploreBooksBtn = document.getElementById('exploreBooksBtn'); // New button
+        // Removed exploreBooksBtn since the hero section it was part of is removed.
 
         function showView(viewId) {
             // Hide all views
@@ -703,15 +698,7 @@
         if (aboutViewBtn) aboutViewBtn.addEventListener('click', () => showView('aboutView'));
         if (contactViewBtn) contactViewBtn.addEventListener('click', () => showView('contactView'));
         if (adminLoginBtn) adminLoginBtn.addEventListener('click', () => showView('adminLoginView'));
-        // New hero section button
-        if (exploreBooksBtn) {
-            exploreBooksBtn.addEventListener('click', () => {
-                const booksContainer = document.getElementById('booksContainer');
-                if (booksContainer) {
-                    booksContainer.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        }
+        // Removed exploreBooksBtn event listener as the button is gone.
 
 
         if (adminLogoutBtn) {
@@ -1021,7 +1008,7 @@
                         showMessageModal("msgPdfUploaded"); // Use translation key
                     } catch (error) {
                         console.error("Error uploading PDF to Firebase Storage:", error);
-                        showMessageModal(`${translations[currentLang]['msgFailedUploadPdf']}: ${error.message}. ${translations[current_lang]['msgCheckStorageRulesOrNetwork']}`); // Use translation key
+                        showMessageModal(`${translations[currentLang]['msgFailedUploadPdf']}: ${error.message}. ${translations[currentLang]['msgCheckStorageRulesOrNetwork']}`); // Use translation key
                         currentPdfFile = null; // Reset file object
                         currentPdfFileName = '';
                         if(pdfFileNameDisplay) pdfFileNameDisplay.textContent = translations[currentLang]['msgUploadFailed']; // Use translation key
