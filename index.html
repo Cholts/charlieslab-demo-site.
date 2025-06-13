@@ -246,22 +246,25 @@
         // This MUST be replaced with YOUR unique config from Firebase Console -> Project settings -> Your apps -> Web app
         const firebaseConfig = {
             // REPLACE THIS ENTIRE CONFIGURATION WITH YOUR chardieslab-demo-site project's config
-            apiKey: "AIzaSyDy3cgr5QWdZ_n85Kh5IyZc5nVpkrOmYQM", // NEW_API_KEY for charlieslab-demo-site
-            authDomain: "charlieslab-demo-site.firebaseapp.com", // NEW_AUTH_DOMAIN
-            projectId: "charlieslab-demo-site", // NEW_PROJECT_ID
-            storageBucket: "charlieslab-demo-site.firebasestorage.app", // NEW_STORAGE_BUCKET
-            messagingSenderId: "21859165806", // NEW_MESSAGING_SENDER_ID
-            appId: "1:21859165806:web:e5d12c15ded14a93ffe87f", // NEW_APP_ID
-            measurementId: "G-ZTYJPB011E" // NEW_MEASUREMENT_ID
+            apiKey: "AIzaSyDy3cgr5QWdZ_n85Kh5IyZc5nVpkrOmYQM",
+            authDomain: "charlieslab-demo-site.firebaseapp.com",
+            projectId: "charlieslab-demo-site",
+            storageBucket: "charlieslab-demo-site.firebasestorage.app",
+            messagingSenderId: "21859165806",
+            appId: "1:21859165806:web:e5d12c15ded14a93ffe87f",
+            measurementId: "G-ZTYJPB011E"
         };
 
-        // Firebase Initialization
-        let app;
-        let db;
-        let auth;
-        let storage; // Declare storage variable
+        // Firebase Initialization: Declare services as const at module top-level
+        // This ensures they are declared only once when the module script is parsed.
+        const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const storage = getStorage(app);
+
         let userId = null;
-        let isAuthReady = false; // Flag to indicate if auth state has been checked
+        let isAuthReady = false;
+        let isLoggedIn = false; // Moved to global module scope
 
         // --- Translation Logic ---
         const translations = {
@@ -283,7 +286,7 @@
                 aboutPara1: "Welcome to <strong>CharliesLAB</strong>, your premier destination for innovative and thought-provoking publications. Founded with a passion for knowledge and creativity, we are dedicated to bringing high-quality literary works to readers worldwide.",
                 aboutPara2: "Our mission is to foster a love for reading and learning by publishing diverse content across various genres, from captivating fiction to insightful non-fiction and cutting-edge research. We believe in the power of words to inspire, educate, and entertain.",
                 aboutPara3: "At CharliesLAB, we pride ourselves on collaborating with talented authors and experts to produce books that resonate with our audience and contribute positively to the intellectual landscape. Join us on this journey of discovery through the pages of our exceptional publications.",
-                aboutPara4: "Thank you for choosing CharliesLAB. We look forward to sharing many more inspiring stories and valuable insights with you.",
+                aboutPara4: "ThankSank you for choosing CharliesLAB. We look forward to sharing many more inspiring stories and valuable insights with you.",
                 contactTitle: "Contact Us",
                 contactEmailLabel: "Email:",
                 contactPhoneLabel: "Phone:",
@@ -343,7 +346,34 @@
                 msgFirebaseConfigInvalid: "Firebase configuration is missing or invalid. Please ensure the app is running in a Firebase-enabled environment with correct config.",
                 msgFirebaseInitFailed: "Failed to initialize Firebase. Check console for details.",
                 msgPublicContentAuthRequired: "Please log in or enable anonymous access in Firebase for public content.",
-                msgSelected: "Selected"
+                msgSelected: "Selected",
+                downloadPdfButton: "Download PDF", // Added missing key
+                editButton: "Edit", // Added missing key
+                deleteButton: "Delete", // Added missing key
+                byAuthor: "by", // Added missing key for dynamic text
+                msgNotAvailable: "Not available", // Added missing key
+                msgUploading: "Uploading",
+                msgUploaded: "Uploaded",
+                msgFailedUploadCover: "Failed to upload cover image",
+                msgFailedUploadPdf: "Failed to upload PDF",
+                msgCheckStorageRulesOrNetwork: "Check storage rules or network.",
+                msgUploadFailed: "Upload failed.",
+                msgLoginRequiredForUpload: "Please log in as admin before uploading files.",
+                msgLoginRequiredToAddEdit: "You must be logged in as an admin to add/edit publications.",
+                msgFirebaseNotReady: "Firebase not ready. Please wait a moment.",
+                msgSelectPdfWaitUpload: "Please select a PDF file and wait for it to finish uploading.",
+                msgSelectCoverWaitUpload: "Please upload a cover image and wait for it to finish uploading.",
+                msgPdfMissing: "PDF missing. Please upload a PDF or ensure existing one is valid.",
+                msgCoverMissing: "Cover image missing. Please upload a cover image or ensure existing one is valid.",
+                msgErrorSavingPublication: "Error saving publication",
+                msgCheckFirestoreRules: "Check Firestore rules.",
+                editPublicationTitle: "Edit Publication",
+                updatePublicationButton: "Update Publication",
+                msgNoCoverSelected: "No cover image selected.",
+                msgNoPdfSelected: "No PDF file selected.",
+                msgEditCancelled: "Edit cancelled.",
+                msgLoginRequiredToDelete: "You must be logged in as an admin to delete publications.",
+                msgNoDescriptionProvided: "No description provided."
             },
             it: {
                 pageTitle: "CharliesLAB - Gestione Libri",
@@ -362,7 +392,7 @@
                 aboutTitle: "Chi Siamo CharliesLAB",
                 aboutPara1: "Benvenuti a <strong>CharliesLAB</strong>, la vostra destinazione principale per pubblicazioni innovative e stimolanti. Fondati con la passione per la conoscenza e la creatività, ci dedichiamo a portare opere letterarie di alta qualità ai lettori di tutto il mondo.",
                 aboutPara2: "La nostra missione è promuovere l'amore per la lettura e l'apprendimento pubblicando contenuti diversi in vari generi, dalla narrativa avvincente alla saggistica perspicace e alla ricerca all'avanguardia. Crediamo nel potere delle parole di ispirare, educare e intrattenere.",
-                aboutPara3: "In CharliesLAB, siamo orgogliosi di collaborare con autori ed esperti di talento per produrre libri che risuonano con il nostro pubblico e contribuiscono positivamente al panorama intellettuale. Unisciti a noi in questo viaggio di scoperta attraverso le pagine delle nostre eccezionali pubblicazioni.",
+                aboutPara3: "In CharliesLAB, siamo orgogliosi di collaborare con talenti authors e esperti per produrre libri che risuonano con il nostro pubblico e contribuiscono positivamente al panorama intellettuale. Unisciti a noi in questo viaggio di scoperta attraverso le pagine delle nostre eccezionali pubblicazioni.",
                 aboutPara4: "Grazie per aver scelto CharliesLAB. Non vediamo l'ora di condividere molte altre storie ispiratrici e preziose intuizioni con voi.",
                 contactTitle: "Contattaci",
                 contactEmailLabel: "Email:",
@@ -423,7 +453,34 @@
                 msgFirebaseConfigInvalid: "La configurazione di Firebase è vuota o non valida. Assicurati che l'app sia in esecuzione in un ambiente abilitato a Firebase con una configurazione corretta.",
                 msgFirebaseInitFailed: "Impossibile inizializzare Firebase. Controlla la console per i dettagli.",
                 msgPublicContentAuthRequired: "Si prega di accedere o abilitare l'accesso anonimo in Firebase per il contenuto pubblico.",
-                msgSelected: "Selezionato"
+                msgSelected: "Selezionato",
+                downloadPdfButton: "Scarica PDF",
+                editButton: "Modifica",
+                deleteButton: "Elimina",
+                byAuthor: "di",
+                msgNotAvailable: "Non disponibile",
+                msgUploading: "Caricamento in corso",
+                msgUploaded: "Caricato",
+                msgFailedUploadCover: "Caricamento immagine di copertina fallito",
+                msgFailedUploadPdf: "Caricamento PDF fallito",
+                msgCheckStorageRulesOrNetwork: "Controlla le regole di storage o la rete.",
+                msgUploadFailed: "Caricamento fallito.",
+                msgLoginRequiredForUpload: "Accedi come amministratore prima di caricare file.",
+                msgLoginRequiredToAddEdit: "Devi essere loggato come amministratore per aggiungere/modificare pubblicazioni.",
+                msgFirebaseNotReady: "Firebase non pronto. Attendi un momento.",
+                msgSelectPdfWaitUpload: "Seleziona un file PDF e attendi che finisca il caricamento.",
+                msgSelectCoverWaitUpload: "Carica un'immagine di copertina e attendi che finisca il caricamento.",
+                msgPdfMissing: "PDF mancante. Carica un PDF o assicurati che quello esistente sia valido.",
+                msgCoverMissing: "Immagine di copertina mancante. Carica un'immagine di copertina o assicurati che quella esistente sia valida.",
+                msgErrorSavingPublication: "Errore durante il salvataggio della pubblicazione",
+                msgCheckFirestoreRules: "Controlla le regole di Firestore.",
+                editPublicationTitle: "Modifica Pubblicazione",
+                updatePublicationButton: "Aggiorna Pubblicazione",
+                msgNoCoverSelected: "Nessuna immagine di copertina selezionata.",
+                msgNoPdfSelected: "Nessun file PDF selezionato.",
+                msgEditCancelled: "Modifica annullata.",
+                msgLoginRequiredToDelete: "Devi essere loggato come amministratore per eliminare pubblicazioni.",
+                msgNoDescriptionProvided: "Nessuna descrizione fornita."
             }
         };
 
@@ -514,13 +571,16 @@
         if (langItBtn) langItBtn.addEventListener('click', () => setLanguage('it'));
 
         // --- Firebase SDKs ---
-        // Firebase Initialization
-        let app;
-        let db;
-        let auth;
-        let storage; // Declare storage variable
+        // Firebase Initialization: Declare services as const at module top-level
+        // This ensures they are declared only once when the module script is parsed.
+        const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const storage = getStorage(app);
+
         let userId = null;
-        let isAuthReady = false; // Flag to indicate if auth state has been checked
+        let isAuthReady = false;
+        let isLoggedIn = false; // Moved to global module scope
 
         // Message Modal Functions
         function showMessageModal(messageKey) {
@@ -593,52 +653,42 @@
 
         // Initialize Firebase and set up auth listener
         async function initializeFirebase() {
-            try {
-                // Check if a Firebase app instance already exists
-                if (!getApps().length) {
-                    app = initializeApp(firebaseConfig);
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    userId = user.uid;
+                    console.log("Authenticated with user ID:", userId);
+                    isLoggedIn = true; // Update isLoggedIn state
                 } else {
-                    app = getApp(); // Get the existing app instance
+                    console.warn(translations[currentLang]['msgAuthWarning']); // Use translation key
+                    userId = null; // Ensure userId is null if no one is signed in
+                    isLoggedIn = false; // Update isLoggedIn state
                 }
+                const currentUserIdElement = document.getElementById('currentUserId');
+                if (currentUserIdElement) {
+                    currentUserIdElement.textContent = userId || translations[currentLang]['footerUserId'] + ' ' + translations[currentLang]['msgNotAvailable']; // Use translation key
+                }
+                isAuthReady = true; // Auth state has been checked
                 
-                db = getFirestore(app);
-                auth = getAuth(app);
-                storage = getStorage(app); // Initialize Firebase Storage here!
-
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        console.log("Authenticated with user ID:", userId);
+                // Only load books if currently on home view and auth is ready
+                if (document.getElementById('homeView') && (document.getElementById('homeView').classList.contains('flex') || !document.getElementById('homeView').classList.contains('hidden'))) {
+                    if (userId) {
+                        loadBooks(); // Load books once authenticated (for Home view)
                     } else {
-                        console.warn(translations[currentLang]['msgAuthWarning']); // Use translation key
-                        userId = null; // Ensure userId is null if no one is signed in
-                    }
-                    const currentUserIdElement = document.getElementById('currentUserId');
-                    if (currentUserIdElement) {
-                        currentUserIdElement.textContent = userId || translations[currentLang]['footerUserId'] + ' ' + translations[currentLang]['msgNotAvailable']; // Use translation key
-                    }
-                    isAuthReady = true; // Auth state has been checked
-                    
-                    // Only load books if currently on home view and auth is ready
-                    if (document.getElementById('homeView') && (document.getElementById('homeView').classList.contains('flex') || !document.getElementById('homeView').classList.contains('hidden'))) {
-                        if (userId) {
-                            loadBooks(); // Load books once authenticated (for Home view)
-                        } else {
-                            const booksContainer = document.getElementById('booksContainer');
-                            const noBooksMessageElement = document.getElementById('noBooksMessage');
-                            if (booksContainer && noBooksMessageElement) {
-                                booksContainer.innerHTML = ''; // Clear any previous content
-                                noBooksMessageElement.textContent = translations[currentLang]['msgPublicContentAuthRequired']; // Use translation key
-                                noBooksMessageElement.classList.remove('hidden');
-                            }
+                        const booksContainer = document.getElementById('booksContainer');
+                        const noBooksMessageElement = document.getElementById('noBooksMessage');
+                        if (booksContainer && noBooksMessageElement) {
+                            booksContainer.innerHTML = ''; // Clear any previous content
+                            noBooksMessageElement.textContent = translations[currentLang]['msgPublicContentAuthRequired']; // Use translation key
+                            noBooksMessageElement.classList.remove('hidden');
                         }
                     }
-                });
-
-            } catch (error) {
-                console.error("Error initializing Firebase:", error);
-                showMessageModal("msgFirebaseInitFailed"); // Use translation key
-            }
+                }
+                // If admin dashboard is currently active and auth changes (e.g., logout from another tab),
+                // ensure it reverts to login view if not logged in.
+                if (document.getElementById('adminDashboardView') && !isLoggedIn && !document.getElementById('adminDashboardView').classList.contains('hidden')) {
+                    showView('adminLoginView'); // Force back to login if admin dashboard is visible but not logged in
+                }
+            });
         }
 
         // --- View Management ---
@@ -730,8 +780,6 @@
         const passwordInput = document.getElementById('password');
         const loginErrorMessage = document.getElementById('loginErrorMessage');
 
-        let isLoggedIn = false; // Simple client-side state
-
         if (adminLoginForm) {
             adminLoginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -740,7 +788,7 @@
 
                 try {
                     await signInWithEmailAndPassword(auth, email, password);
-                    isLoggedIn = true;
+                    isLoggedIn = true; // This will be set by onAuthStateChanged but is here for immediate UI update
                     showView('adminDashboardView');
                     if (loginErrorMessage) loginErrorMessage.textContent = '';
                     if (usernameInput) usernameInput.value = '';
@@ -817,8 +865,8 @@
                                 <div class="bg-yellow-100 p-4 rounded-lg shadow-md flex flex-col items-center text-center transition duration-300 hover:shadow-lg">
                                     <img src="${book.coverImageUrl || 'https://placehold.co/150x200/cccccc/333333?text=No+Cover'}" alt="${book.title}" class="w-36 h-48 object-cover rounded-md mb-4 shadow-sm">
                                     <h3 class="text-xl font-semibold mb-2 text-gray-800">${book.title}</h3>
-                                    <p class="text-gray-600 text-sm mb-3" data-lang-key="byAuthor">by ${book.author}</p>
-                                    <p class="text-gray-700 text-sm overflow-hidden text-ellipsis h-12 mb-4">${book.description || (translations[currentLang]['bookDescriptionLabel'] + ' ' + translations[currentLang]['msgNoDescriptionProvided'])}</p>
+                                    <p class="text-gray-600 text-sm mb-3">${translations[currentLang]['byAuthor']} ${book.author}</p>
+                                    <p class="text-gray-700 text-sm overflow-hidden text-ellipsis h-12 mb-4">${book.description || (translations[currentLang]['msgNoDescriptionProvided'])}</p>
                                     <a href="${book.pdfUrl || '#'}" target="_blank" class="mt-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ${!book.pdfUrl ? 'opacity-50 cursor-not-allowed' : ''}" ${!book.pdfUrl ? `onclick="event.preventDefault(); showMessageModal('msgPdfNotAvailable');"` : ''}>
                                         ${translations[currentLang]['downloadPdfButton']}
                                     </a>
@@ -833,7 +881,6 @@
                 showMessageModal("msgErrorLoadingPublications");
                 if (noBooksMessageElement) {
                     noBooksMessageElement.textContent = translations[currentLang]['msgErrorLoadingPublications'];
-                    noBooksMessageElement.classList.remove('hidden');
                 }
             }
         }
@@ -907,7 +954,6 @@
                 console.error("Error setting up Firestore listener for admin books:", error);
                 showMessageModal("msgErrorLoadingAdminPublications");
                 if (noAdminBooksMessage) {
-                    noAdminBooksMessage.classList.remove('hidden');
                     noAdminBooksMessage.textContent = translations[currentLang]['msgErrorLoadingAdminPublications'];
                 }
             }
