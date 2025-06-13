@@ -130,9 +130,9 @@
         <!-- Home View Section (Publications) -->
         <section id="homeView" class="hidden bg-neutral-50 p-6 rounded-xl shadow-lg">
             <h2 class="text-3xl font-bold mb-6 text-center text-gray-800" data-lang-key="ourPublicationsTitle">Our Publications</h2>
-            <div class="mb-6">
+            <div class="mb-6 max-w-lg mx-auto"> <!-- Added max-w-lg mx-auto for better centering and room -->
                 <label for="publicSearchInput" class="sr-only" data-lang-key="searchPublicationsLabel">Search Publications</label>
-                <input type="text" id="publicSearchInput" placeholder="Search by title or author..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" data-lang-key="searchPlaceholder">
+                <input type="text" id="publicSearchInput" placeholder="Search by title or author..." class="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" data-lang-key="searchPlaceholder">
             </div>
             <div id="booksContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <!-- Books will be loaded here by JavaScript -->
@@ -537,7 +537,7 @@
 
             // Update dynamically generated text in file input displays
             const coverImageFileNameDisplayLocal = document.getElementById('coverImageFileNameDisplay');
-            const pdfFileNameDisplayLocal = document.getElementById('pdfFileNameDisplay');
+            const pdfFileNameDisplayLocal = document.getElementById('coverImageFileNameDisplay'); // Corrected to pdfFileNameDisplayLocal
             const uploadedCoverPreviewLocal = document.getElementById('uploadedCoverPreview');
 
 
@@ -556,10 +556,6 @@
             } else {
                 if (pdfFileNameDisplayLocal) pdfFileNameDisplayLocal.textContent = '';
             }
-
-            // Update dynamically generated text in file input displays
-            // This function needs to be called after updating the relevant variables (currentCoverImageFile, currentPdfFile, editingBookId, currentCoverImageFileName, currentPdfFileName, currentPdfURL)
-            // The logic in `setLanguage` to update these displays is correct provided these variables hold the correct state.
 
             // Update potentially dynamic content like "by Author"
             document.querySelectorAll('.book-card-author').forEach(el => {
@@ -1177,8 +1173,8 @@
 
                     filteredBooks.forEach((book) => {
                         // Truncate description for card view
-                        const truncatedDescription = book.description && book.description.length > 100 
-                            ? book.description.substring(0, 97) + '...' 
+                        const truncatedDescription = book.description && book.description.length > 150 // Increased to 150 for more lines
+                            ? book.description.substring(0, 147) + '...' 
                             : (book.description || translations[currentLang]['msgNoDescriptionProvided']);
 
                         const bookCard = `
@@ -1186,7 +1182,7 @@
                                 <img src="${book.coverImageUrl || 'https://placehold.co/150x200/cccccc/333333?text=No+Cover'}" alt="${book.title}" class="w-36 h-48 object-cover rounded-md mb-4 shadow-sm">
                                 <h3 class="text-xl font-semibold mb-2 text-gray-800">${book.title}</h3>
                                 <p class="text-gray-600 text-sm mb-3">${translations[currentLang]['byAuthor']} ${book.author}</p>
-                                <p class="text-gray-700 text-sm h-12 overflow-hidden">${truncatedDescription}</p>
+                                <p class="text-gray-700 text-sm h-20 overflow-hidden">${truncatedDescription}</p> <!-- Changed h-12 to h-20 -->
                                 <button class="mt-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 transform hover:scale-105 mt-4" onclick="showBookDetailsModalWithId('${book.id}')" data-lang-key="viewDetailsButton">View Details</button>
                             </div>
                         `;
